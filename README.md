@@ -1,4 +1,4 @@
-# Enrolment-manager
+# Student Enrolment Manager
 Manage students, their enrolment status, and related information.
 
 ## CRUD Operations
