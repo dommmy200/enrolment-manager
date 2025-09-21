@@ -3,6 +3,7 @@ const database = require('../data/database')
 const { ObjectId } = require('mongodb')
 
 const getAllEnrolledStudents = async (req, res) => {
+    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase()
         const students = await db.collection('students').find().toArray()
@@ -41,6 +42,7 @@ const getOneEnrolledStudent = async (req, res) => {
 }
 
 const insertOneEnrolledStudent = async (req, res) => {
+    //swagger.tags=['Hello World']
     const db = database.getDatabase()
     const updateEnrolment = {
         first_name: req.body.first_name,
@@ -62,6 +64,7 @@ const insertOneEnrolledStudent = async (req, res) => {
     
 }
 const updateStudentEnrollment = async (req, res) => {
+    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase();
         const { id } = req.params;
@@ -111,25 +114,26 @@ const updateStudentEnrollment = async (req, res) => {
 };
 
 const deleteOneEnrolledStudent = async (req, res) => {
-  try {
-    const db = database.getDatabase();
-    const { id } = req.params;
-    const filter = { _id: new ObjectId(id) };
-    console.log('ObjectId:', filter);
-    console.log('req.params.id:', req.params.id);
+    //swagger.tags=['Hello World']
+    try {
+        const db = database.getDatabase();
+        const { id } = req.params;
+        const filter = { _id: new ObjectId(id) };
+        console.log('ObjectId:', filter);
+        console.log('req.params.id:', req.params.id);
 
-    if (!ObjectId.isValid(id)) {
-      return res.status(400).json({ error: 'Invalid ID format' });
+        if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'Invalid ID format' });
+        }
+        const result = await db.collection('students').deleteOne({ _id: new ObjectId(id) });
+        if (result.deletedCount === 0) {
+        return res.status(404).json({ message: 'No student found to delete.' });
+        }
+        res.json({ message: 'Student deleted successfully.' });
+    } catch (err) {
+        console.error('Delete error:', err);
+        res.status(500).json({ error: 'Internal Server Error!' });
     }
-    const result = await db.collection('students').deleteOne({ _id: new ObjectId(id) });
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ message: 'No student found to delete.' });
-    }
-    res.json({ message: 'Student deleted successfully.' });
-  } catch (err) {
-    console.error('Delete error:', err);
-    res.status(500).json({ error: 'Internal Server Error!' });
-  }
 };
 
 module.exports = { getAllEnrolledStudents, getOneEnrolledStudent, insertOneEnrolledStudent, updateStudentEnrollment, deleteOneEnrolledStudent }
