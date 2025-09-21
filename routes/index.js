@@ -1,7 +1,7 @@
 const express = require('express')
 const studentsRoute = require('./students')
-const coursesRoute = require('./students')
-const instructorRoute = require('./students')
+const coursesRoute = require('./courses')
+const instructorRoute = require('./instructors')
 const router = express.Router()
 
 router.get('/', (req, res, next) => {

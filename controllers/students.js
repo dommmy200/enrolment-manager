@@ -82,12 +82,20 @@ const updateStudentEnrollment = async (req, res) => {
         const filter = { 
             _id: new ObjectId(id)
         };
-
+        const allowedFields = [
+            'first_name', 'last_name', 'email', 
+            'phone_number', 'course', 'enrolment_date', 
+            'status', 'gpa'
+        ];
+        const updateData = {};
+        allowedFields.forEach(field => {
+            if (req.body[field] !== undefined) updateData[field] = req.body[field];
+        });
         // Without $set, if you passed req.body directly:
         // MongoDB would replace the entire document with only the fields in 
         // req.body, deleting any others not listed. $set avoids that by 
         // performing a partial update.
-        const updateDoc = { $set: req.body };
+        const updateDoc = { $set: updateData };
         let student = ''
         const result = await db.collection('students').updateOne(filter, updateDoc);
         if (result.matchedCount === 0) {
