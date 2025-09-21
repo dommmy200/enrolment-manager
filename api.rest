@@ -43,6 +43,6 @@ Content-Type: application/json
 }
 
 ### Delete a contact
-DELETE  http://localhost:3000/students/delete/68cf25a08222d64a3dfa1217 HTTP/1.1
+DELETE  https://enrolment-manager.onrender.com/students/delete/68cf25a08222d64a3dfa1216 HTTP/1.1
 
 ### GET {{baseUrl}}/contacts/68bd7ee59498bdf2085f68cd HTTP/1.1
