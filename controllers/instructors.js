@@ -89,7 +89,7 @@ const updateInstructors = async (req, res) => {
         // performing a partial update.
         const updateDoc = { $set: req.body };
         let instructor = ''
-        const result = await db.collection('students').updateOne(filter, updateDoc);
+        const result = await db.collection('instructors').updateOne(filter, updateDoc);
         if (result.matchedCount === 0) {
             return res.status(404).json({
                 message: 'No matching instructor found.'

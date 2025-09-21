@@ -27,10 +27,10 @@ const getOneCourse = async (req, res) => {
         }
         const courseId = ObjectId.createFromHexString(req.params.id);
         const db = database.getDatabase()
-        const courses = await db.collection('students').findOne({_id: courseId})
+        const courses = await db.collection('courses').findOne({_id: courseId})
         if (!courses) {
             return res.status(404).json({
-                message: "No Student Found!"
+                message: "No Courses Found!"
             })
         }
         res.status(200).json(courses)
