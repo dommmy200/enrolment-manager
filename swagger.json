@@ -1,30 +1,112 @@
 {
   "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "title": "Enrolment Manager API",
     "description": "API for managing students, instructors, and courses",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": [
-    "http"
-  ],
-  "securityDefinitions": {
-    "cookieAuth": {
-      "type": "apiKey",
-      "in": "cookie",
-      "name": "connect.sid",
-      "description": "Provide the session cookie for authentication after logging in via GitHub."
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
     }
-  },
+  ],
+  "tags": [
+    {
+      "name": "Students",
+      "description": "Operations related to student enrollment, retrieval, and management."
+    },
+    {
+      "name": "Courses",
+      "description": "Operations for managing and querying courses and their details."
+    },
+    {
+      "name": "Instructors",
+      "description": "Operations for managing instructors and retrieving faculty information."
+    },
+    {
+      "name": "Auth",
+      "description": "User authentication and session management (Login, GitHub OAuth)."
+    }
+  ],
   "paths": {
     "/": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "example": "any"
+                },
+                "last_name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phone_number": {
+                  "example": "any"
+                },
+                "department_id": {
+                  "example": "any"
+                },
+                "hire_date": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -76,16 +158,6 @@
         }
       }
     },
-    "/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/profile": {
       "get": {
         "tags": [
@@ -109,56 +181,118 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "cookieAuth": []
           }
         ]
       }
     },
     "/students/": {
       "get": {
-        "tags": [
-          "Students"
-        ],
-        "description": "Retrieve all students",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "example": "any"
+                },
+                "last_name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phone_number": {
+                  "example": "any"
+                },
+                "enrolment_date": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "any"
+                },
+                "gpa": {
+                  "example": "any"
+                },
+                "course_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/students/{id}": {
       "get": {
-        "tags": [
-          "Students"
-        ],
-        "description": "Get a student by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Student ID"
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           },
           {
             "name": "authorization",
@@ -172,6 +306,65 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/courses/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -186,27 +379,49 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/students/post": {
+      },
       "post": {
-        "tags": [
-          "Students"
-        ],
-        "description": "Enroll a new student",
+        "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "example": "any"
+                },
+                "semester": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                },
+                "code": {
+                  "example": "any"
+                },
+                "credits": {
+                  "example": "any"
+                },
+                "department_id": {
+                  "example": "any"
+                },
+                "instructor_id": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Student enrolled",
-            "schema": {
-              "$ref": "#/components/schemas/Student"
-            }
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
@@ -216,153 +431,19 @@
           },
           "403": {
             "description": "Forbidden"
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "requestBody": {}
-      }
-    },
-    "/students/update/{id}": {
-      "put": {
-        "tags": [
-          "Students"
-        ],
-        "description": "Update a student by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Student ID"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Student updated",
-            "schema": {
-              "$ref": "#/components/schemas/Student"
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "requestBody": {}
-      }
-    },
-    "/students/delete/{id}": {
-      "delete": {
-        "tags": [
-          "Students"
-        ],
-        "description": "Delete a student by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Student ID"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ]
-      }
-    },
-    "/courses/": {
-      "get": {
-        "tags": [
-          "Courses"
-        ],
-        "description": "Retrieve all courses",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
     },
     "/courses/{id}": {
       "get": {
-        "tags": [
-          "Courses"
-        ],
-        "description": "Get a course by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Course ID"
+            "type": "string"
           },
           {
             "name": "authorization",
@@ -390,104 +471,15 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/courses/post": {
-      "post": {
-        "tags": [
-          "Courses"
-        ],
-        "description": "Create a new course",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Course created",
-            "schema": {
-              "$ref": "#/components/schemas/Course"
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "requestBody": {}
-      }
-    },
-    "/courses/update/{id}": {
+      },
       "put": {
-        "tags": [
-          "Courses"
-        ],
-        "description": "Update a course by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Course ID"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Course updated",
-            "schema": {
-              "$ref": "#/components/schemas/Course"
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "requestBody": {}
-      }
-    },
-    "/courses/delete/{id}": {
-      "delete": {
-        "tags": [
-          "Courses"
-        ],
-        "description": "Delete a course by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Course ID"
           },
           {
             "name": "authorization",
@@ -511,20 +503,45 @@
           "404": {
             "description": "Not Found"
           }
-        },
-        "security": [
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
           {
-            "cookieAuth": []
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/instructors/": {
       "get": {
-        "tags": [
-          "Instructors"
-        ],
-        "description": "Retrieve all instructors",
+        "description": "",
         "parameters": [
           {
             "name": "authorization",
@@ -547,23 +564,70 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "example": "any"
+                },
+                "last_name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phone_number": {
+                  "example": "any"
+                },
+                "department_id": {
+                  "example": "any"
+                },
+                "hire_date": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/instructors/{id}": {
       "get": {
-        "tags": [
-          "Instructors"
-        ],
-        "description": "Get an instructor by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Instructor ID"
+            "type": "string"
           },
           {
             "name": "authorization",
@@ -591,107 +655,15 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/instructors/post": {
-      "post": {
-        "tags": [
-          "Instructors"
-        ],
-        "description": "Create a new instructor",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Instructor created",
-            "schema": {
-              "$ref": "#/components/schemas/Instructor"
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "requestBody": {}
-      }
-    },
-    "/instructors/update/{id}": {
+      },
       "put": {
-        "tags": [
-          "Instructors"
-        ],
-        "description": "Update an instructor by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Instructor ID"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
             "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Instructor updated",
-            "schema": {
-              "$ref": "#/components/schemas/Instructor"
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "requestBody": {}
-      }
-    },
-    "/instructors/delete/{id}": {
-      "delete": {
-        "tags": [
-          "Instructors"
-        ],
-        "description": "Delete an instructor by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Instructor ID"
           },
           {
             "name": "authorization",
@@ -715,12 +687,144 @@
           "404": {
             "description": "Not Found"
           }
-        },
-        "security": [
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
           {
-            "cookieAuth": []
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     }
   },
@@ -730,141 +834,396 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "connect.sid",
+        "description": "Used internally by Passport/Express for session management."
       }
     },
     "schemas": {
       "Course": {
         "type": "object",
         "properties": {
-          "_id": {
+          "type": {
             "type": "string",
-            "example": "68cf25a08222d64a3dfa3001"
+            "example": "object"
           },
-          "title": {
-            "type": "string",
-            "example": "Introduction to Computer Science"
+          "properties": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "68cf25a08222d64a3dfa3001"
+                  }
+                }
+              },
+              "title": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Introduction to Computer Science"
+                  }
+                }
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "CS101"
+                  }
+                }
+              },
+              "credits": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 3
+                  }
+                }
+              },
+              "department_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "68cf25a08222d64a3dfa1001"
+                  }
+                }
+              },
+              "instructor_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "68cf25a08222d64a3dfa2001"
+                  }
+                }
+              }
+            }
           },
-          "code": {
-            "type": "string",
-            "example": "CS101"
-          },
-          "credits": {
-            "type": "integer",
-            "example": 3
-          },
-          "department_id": {
-            "type": "string",
-            "example": "68cf25a08222d64a3dfa1001"
-          },
-          "instructor_id": {
-            "type": "string",
-            "example": "68cf25a08222d64a3dfa2001"
+          "required": {
+            "type": "array",
+            "example": [
+              "title",
+              "code",
+              "credits",
+              "department_id",
+              "instructor_id"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
-        },
-        "required": [
-          "title",
-          "code",
-          "credits",
-          "department_id",
-          "instructor_id"
-        ]
+        }
       },
       "Student": {
         "type": "object",
         "properties": {
-          "_id": {
+          "type": {
             "type": "string",
-            "example": "68cf25a08222d64a3dfa4001"
+            "example": "object"
           },
-          "first_name": {
-            "type": "string",
-            "example": "John"
+          "properties": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "68cf25a08222d64a3dfa4001"
+                  }
+                }
+              },
+              "first_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "John"
+                  }
+                }
+              },
+              "last_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Doe"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "johndoe@example.com"
+                  }
+                }
+              },
+              "phone_number": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "+1234567890"
+                  }
+                }
+              },
+              "enrolment_date": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "2025-01-10"
+                  }
+                }
+              },
+              "status": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "active"
+                  }
+                }
+              },
+              "gpa": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 3.8
+                  }
+                }
+              },
+              "course_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "68cf25a08222d64a3dfa3001"
+                  }
+                }
+              }
+            }
           },
-          "last_name": {
-            "type": "string",
-            "example": "Doe"
-          },
-          "email": {
-            "type": "string",
-            "example": "johndoe@example.com"
-          },
-          "phone_number": {
-            "type": "string",
-            "example": "+1234567890"
-          },
-          "enrolment_date": {
-            "type": "string",
-            "format": "date",
-            "example": "2025-01-10"
-          },
-          "status": {
-            "type": "string",
-            "example": "active"
-          },
-          "gpa": {
-            "type": "number",
-            "example": 3.8
-          },
-          "course_id": {
-            "type": "string",
-            "example": "68cf25a08222d64a3dfa3001"
+          "required": {
+            "type": "array",
+            "example": [
+              "first_name",
+              "last_name",
+              "email",
+              "enrolment_date",
+              "status",
+              "course_id"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
-        },
-        "required": [
-          "first_name",
-          "last_name",
-          "email",
-          "enrolment_date",
-          "status",
-          "course_id"
-        ]
+        }
       },
       "Instructor": {
         "type": "object",
         "properties": {
-          "_id": {
+          "type": {
             "type": "string",
-            "example": "68cf25a08222d64a3dfa2001"
+            "example": "object"
           },
-          "first_name": {
-            "type": "string",
-            "example": "Jane"
+          "properties": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "68cf25a08222d64a3dfa2001"
+                  }
+                }
+              },
+              "first_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Jane"
+                  }
+                }
+              },
+              "last_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Smith"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "janesmith@example.com"
+                  }
+                }
+              },
+              "phone_number": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "+1987654321"
+                  }
+                }
+              },
+              "department_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "68cf25a08222d64a3dfa1001"
+                  }
+                }
+              },
+              "hire_date": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "2020-08-15"
+                  }
+                }
+              }
+            }
           },
-          "last_name": {
-            "type": "string",
-            "example": "Smith"
-          },
-          "email": {
-            "type": "string",
-            "example": "janesmith@example.com"
-          },
-          "phone_number": {
-            "type": "string",
-            "example": "+1987654321"
-          },
-          "department_id": {
-            "type": "string",
-            "example": "68cf25a08222d64a3dfa1001"
-          },
-          "hire_date": {
-            "type": "string",
-            "format": "date",
-            "example": "2020-08-15"
+          "required": {
+            "type": "array",
+            "example": [
+              "first_name",
+              "last_name",
+              "email",
+              "department_id",
+              "hire_date"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
-        },
-        "required": [
-          "first_name",
-          "last_name",
-          "email",
-          "department_id",
-          "hire_date"
-        ]
+        }
       }
-    },
-    "security": [
-      {
-        "bearerAuth": []
-      }
-    ]
-  }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }

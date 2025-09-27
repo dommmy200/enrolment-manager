@@ -3,78 +3,61 @@ const router = express.Router();
 const coursesController = require('../controllers/courses');
 const { authenticateJWT } = require('../middleware/authenticate');
 
-/**
- * GET /courses
- */
-router.get('/', 
-  authenticateJWT,
+// GET all courses
+router.get('/', authenticateJWT, (req, res, next) => {
   // #swagger.tags = ['Courses']
   // #swagger.description = 'Retrieve all courses'
-  coursesController.getAllCourses
-);
+  coursesController.getAllCourses(req, res, next);
+});
 
-/**
- * GET /courses/{id}
- */
-router.get('/:id',
-  authenticateJWT,
+// GET one course
+router.get('/:id', authenticateJWT, (req, res, next) => {
   // #swagger.tags = ['Courses']
   // #swagger.description = 'Get a course by ID'
   // #swagger.parameters['id'] = { description: "Course ID" }
-  coursesController.getOneCourse
-);
+  coursesController.getOneCourse(req, res, next);
+});
 
-/**
- * POST /courses
- */
-router.post('/post',
-   authenticateJWT, 
+// CREATE course
+router.post('/post', authenticateJWT, (req, res, next) => {
   // #swagger.tags = ['Courses']
   // #swagger.description = 'Create a new course'
-  // #swagger.security = [{"cookieAuth": []}]
+  // #swagger.security = [{ "bearerAuth": [] }]
   // #swagger.requestBody = {
   //   required: true,
   //   content: {
-  //     "application/json": {
-  //       schema: { $ref: "#/components/schemas/Course" }
-  //     }
+  //     "application/json": { schema: { $ref: "#/components/schemas/Course" } }
   //   }
   // }
-  // #swagger.responses[201] = { description: "Course created", schema: { $ref: "#/components/schemas/Course" } }
-  coursesController.insertOneCourse
-);
+  // #swagger.responses[201] = {
+  //   description: "Course created",
+  //   schema: { $ref: "#/components/schemas/Course" }
+  // }
+  coursesController.insertOneCourse(req, res, next);
+});
 
-/**
- * PUT /courses/{id}
- */
-router.put('/update/:id', 
-  authenticateJWT, 
+// UPDATE course
+router.put('/update/:id', authenticateJWT, (req, res, next) => {
   // #swagger.tags = ['Courses']
   // #swagger.description = 'Update a course by ID'
+  // #swagger.security = [{ "bearerAuth": [] }]
   // #swagger.parameters['id'] = { description: "Course ID" }
-  // #swagger.security = [{"cookieAuth": []}]
   // #swagger.requestBody = {
   //   required: true,
   //   content: {
-  //     "application/json": {
-  //       schema: { $ref: "#/components/schemas/Course" }
-  //     }
+  //     "application/json": { schema: { $ref: "#/components/schemas/Course" } }
   //   }
   // }
-  // #swagger.responses[200] = { description: "Course updated", schema: { $ref: "#/components/schemas/Course" } }
-  coursesController.updateCourses
-);
+  coursesController.updateCourses(req, res, next);
+});
 
-/**
- * DELETE /courses/{id}
- */
-router.delete('/delete/:id', 
-  authenticateJWT, 
+// DELETE course
+router.delete('/delete/:id', authenticateJWT, (req, res, next) => {
   // #swagger.tags = ['Courses']
   // #swagger.description = 'Delete a course by ID'
+  // #swagger.security = [{ "bearerAuth": [] }]
   // #swagger.parameters['id'] = { description: "Course ID" }
-  // #swagger.security = [{"cookieAuth": []}]
-  coursesController.deleteOneCourse
-);
+  coursesController.deleteOneCourse(req, res, next);
+});
 
 module.exports = router;

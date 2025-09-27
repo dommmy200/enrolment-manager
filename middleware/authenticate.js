@@ -61,7 +61,7 @@ const authenticateJWT = (req, res, next) => {
 const generateToken = (user) => {
   // user here is typically from your DB or OAuth provider
   const payload = {
-    id: user.id,
+    id: user._id,
     email: user.email,
     displayName: user.displayName, // include this for profile page
   };
