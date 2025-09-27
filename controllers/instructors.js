@@ -129,13 +129,8 @@ const updateInstructors = async (req, res, next) => {
         };
 
         const updateDoc = { $set: req.body };
-<<<<<<< HEAD
-        const result = await db.collection('instructors').updateOne(filter, updateDoc);
-
-=======
         let instructor = ''
         const result = await db.collection('students').updateOne(filter, updateDoc);
->>>>>>> parent of eac715d (Crrection on CRUD method definitions)
         if (result.matchedCount === 0) {
             const checkExists = await db.collection('instructors').findOne({ _id: new ObjectId(instructorId) });
             
