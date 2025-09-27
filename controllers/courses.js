@@ -22,32 +22,7 @@ const getAllCourses = async (req, res) => {
         // Log the error for server visibility
         console.error('Error fetching all courses:', err);
         res.status(500).json({
-<<<<<<< HEAD
             message: "Internal Server Error"
-=======
-            message: err.message
-        })
-    }
-}
-const getOneCourse = async (req, res) => {
-    //swagger.tags=['Hello World']
-    try {
-        if (!ObjectId.isValid(req.params.id)) {
-            return res.status(400).json({message: "Invalid Format!"})
-        }
-        const courseId = ObjectId.createFromHexString(req.params.id);
-        const db = database.getDatabase()
-        const courses = await db.collection('students').findOne({_id: courseId})
-        if (!courses) {
-            return res.status(404).json({
-                message: "No Student Found!"
-            })
-        }
-        res.status(200).json(courses)
-    } catch (err) {
-        res.status(500).json({
-            message: err.message
->>>>>>> parent of eac715d (Crrection on CRUD method definitions)
         })
     }
 }
