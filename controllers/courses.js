@@ -40,7 +40,6 @@ const getOneCourse = async (req, res) => {
         const courseId = new ObjectId(req.params.id);
         const db = database.getDatabase()
         const courses = await db.collection('students').findOne({_id: courseId})
-        const courses = await db.collection('students').findOne({_id: courseId})
         if (!courses) {
             return res.status(404).json({
                 message: "Course Not Found!"
