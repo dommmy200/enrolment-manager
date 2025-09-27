@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+</head>
+<body>
+    <header>
+        <a href="/logout">Logout</a>
+        <a href="/">Home</a>
+    </header>
+
+    <h1>Welcome, <%= user.displayName %>!</h1>
+    
+    <p>This is your protected profile page, indicating a successful login.</p>
+    
+    <h2>User Details (from GitHub)</h2>
+    <ul>
+        <li>GitHub ID: <%= user.id %></li>
+        <li>Display Name: <%= user.displayName %></li>
+        <li>GitHub Username: <%= user.username %></li>
+        </ul>
+    
+    <p><a href="/instructors">Manage Instructors (Protected CRUD)</a></p>
+    <p><a href="/courses">Manage Courses (Protected CRUD)</a></p>
+    <p><a href="/students">Manage Students (Protected CRUD)</a></p>
+</body>
+</html>
