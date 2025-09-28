@@ -24,6 +24,7 @@ mongodb.initDatabase((err) => {
     } else {
         app.listen(port, () =>  {
             console.log(`Database is connected. Server is live on Port: ${port}`)
+             console.log(`API Documentation available at: http://localhost:${port}/api-docs\n`)
         })
     }
 })

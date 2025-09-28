@@ -8,8 +8,14 @@
   "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https",
-    "http"
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
   ],
   "paths": {
     "/": {
@@ -125,29 +131,45 @@
     },
     "/students/update/{id}": {
       "put": {
-        "description": "",
+        "description": "Update an existing student",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The student ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Student information to update",
+            "schema": {
+              "$ref": "#/definitions/StudentUpdate"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Student successfully updated",
+            "schema": {
+              "$ref": "#/definitions/StudentUpdate"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad request - update data missing or invalid"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Student not found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "tags": [
+          "Students"
+        ]
       }
     },
     "/students/delete/{id}": {
@@ -267,29 +289,45 @@
     },
     "/courses/update/{id}": {
       "put": {
-        "description": "",
+        "description": "Update an existing course",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The course ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Courses information to update",
+            "schema": {
+              "$ref": "#/definitions/CourseUpdate"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Courses successfully updated",
+            "schema": {
+              "$ref": "#/definitions/CourseUpdate"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad request - update data missing or invalid"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Courses not found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/delete/{id}": {
@@ -412,29 +450,45 @@
     },
     "/instructors/update/{id}": {
       "put": {
-        "description": "",
+        "description": "Update an existing instructor",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The Instructor ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Instructor information to update",
+            "schema": {
+              "$ref": "#/definitions/InstructorUpdate"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instructor successfully updated",
+            "schema": {
+              "$ref": "#/definitions/InstructorUpdate"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad request - update data missing or invalid"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Instructor not found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "tags": [
+          "Instructors"
+        ]
       }
     },
     "/instructors/delete/{id}": {
@@ -461,6 +515,115 @@
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "StudentUpdate": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "example": "OduduaZXY"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "YorubaXYZ"
+        },
+        "email": {
+          "type": "string",
+          "example": "abrahimttt.mukaila@example.com"
+        },
+        "phone_number": {
+          "type": "string",
+          "example": "+234809870987"
+        },
+        "course": {
+          "type": "string",
+          "example": "Medic"
+        },
+        "enrollment_date": {
+          "type": "string",
+          "example": "2020-11-20"
+        },
+        "status": {
+          "type": "string",
+          "example": "Graduated"
+        },
+        "gpa": {
+          "type": "number",
+          "example": 4
+        }
+      }
+    },
+    "CourseUpdate": {
+      "type": "object",
+      "properties": {
+        "course_name": {
+          "type": "string",
+          "example": "any"
+        },
+        "description": {
+          "type": "string",
+          "example": "any"
+        },
+        "credits": {
+          "type": "string",
+          "example": "any"
+        },
+        "department": {
+          "type": "string",
+          "example": "any"
+        },
+        "course": {
+          "type": "string",
+          "example": "any"
+        },
+        "instructor": {
+          "type": "string",
+          "example": "any"
+        },
+        "semester": {
+          "type": "string",
+          "example": "any"
+        }
+      }
+    },
+    "InstructorUpdate": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "example": "any"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "any"
+        },
+        "email": {
+          "type": "string",
+          "example": "any"
+        },
+        "phone_number": {
+          "type": "string",
+          "example": "any"
+        },
+        "course": {
+          "type": "string",
+          "example": "any"
+        },
+        "department": {
+          "type": "string",
+          "example": "any"
+        },
+        "hire_date": {
+          "type": "string",
+          "example": "any"
+        },
+        "status": {
+          "type": "string",
+          "example": "any"
         }
       }
     }

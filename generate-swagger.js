@@ -1,0 +1,231 @@
+// generate-swagger.js
+const swaggerAutogen = require('swagger-autogen')();
+const fs = require('fs');
+const path = require('path');
+
+const outputFile = path.join(__dirname, 'swagger.json');
+const endpointsFiles = [path.join(__dirname, 'routes/index.js')];
+
+// Your doc: keep definitions and the paths/responses you want guaranteed.
+// (You can also require('./swaggerDoc') here if you keep it in a separate file.)
+const doc = {
+  info: {
+    title: "School API",
+    description: "School student, instructors, and courses API"
+  },
+  host: "localhost:3000",
+  schemes: ['http', 'https'],
+  consumes: ["application/json"],
+  produces: ["application/json"],
+
+  // SIMPLE examples-only style for swagger-autogen (it infers types from values)
+  definitions: {
+    StudentUpdate: {
+        first_name: "OduduaZXY",
+        last_name: "YorubaXYZ",
+        email: "abrahimttt.mukaila@example.com",
+        phone_number: "+234809870987",
+        course: "Medic",
+        enrollment_date: "2020-11-20",
+        status: "Graduated",
+        gpa: 4.0
+    },
+    CourseUpdate: {
+        course_name: "any",
+        description: "any",
+        credits: "any",
+        department: "any",
+        course: "any",
+        instructor: "any",
+        semester: "any"
+    },
+    InstructorUpdate: {
+        first_name: "any",
+        last_name: "any",
+        email: "any",
+        phone_number: "any",
+        course: "any",
+        department: "any",
+        hire_date: "any",
+        status: "any"
+    }
+  },
+
+  // This paths entry is the "source of truth" we'll merge into generated swagger.json
+  paths: {
+    "/students/update/{id}": {
+      put: {
+        tags: ["Students"],
+        description: "Update an existing student",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            type: "string",
+            description: "The student ID"
+          },
+          {
+            name: "body",
+            in: "body",
+            required: true,
+            description: "Student information to update",
+            schema: { $ref: "#/definitions/StudentUpdate" }
+          }
+        ],
+        responses: {
+          "200": {
+            description: "Student successfully updated",
+            schema: { $ref: "#/definitions/StudentUpdate" }
+          },
+          "400": { description: "Bad request - update data missing or invalid" },
+          "404": { description: "Student not found" },
+          "500": { description: "Internal Server Error" }
+        }
+      }
+    },
+     "/courses/update/{id}": {
+      put: {
+        tags: ["Courses"],
+        description: "Update an existing course",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            type: "string",
+            description: "The course ID"
+          },
+          {
+            name: "body",
+            in: "body",
+            required: true,
+            description: "Courses information to update",
+            schema: { $ref: "#/definitions/CourseUpdate" }
+          }
+        ],
+        responses: {
+          "200": {
+            description: "Courses successfully updated",
+            schema: { $ref: "#/definitions/CourseUpdate" }
+          },
+          "400": { description: "Bad request - update data missing or invalid" },
+          "404": { description: "Courses not found" },
+          "500": { description: "Internal Server Error" }
+        }
+      }
+    },
+     "/instructors/update/{id}": {
+      put: {
+        tags: ["Instructors"],
+        description: "Update an existing instructor",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            type: "string",
+            description: "The Instructor ID"
+          },
+          {
+            name: "body",
+            in: "body",
+            required: true,
+            description: "Instructor information to update",
+            schema: { $ref: "#/definitions/InstructorUpdate" }
+          }
+        ],
+        responses: {
+          "200": {
+            description: "Instructor successfully updated",
+            schema: { $ref: "#/definitions/InstructorUpdate" }
+          },
+          "400": { description: "Bad request - update data missing or invalid" },
+          "404": { description: "Instructor not found" },
+          "500": { description: "Internal Server Error" }
+        }
+      }
+    }
+  }
+};
+
+// Run swagger-autogen, then post-process generated swagger.json to merge doc.paths
+swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
+  try {
+    const generated = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+
+    // Ensure generated.paths exists
+    generated.paths = generated.paths || {};
+
+    // For each path in doc.paths, merge into generated.paths
+    for (const docPath of Object.keys(doc.paths || {})) {
+      const docOps = doc.paths[docPath];
+      // Make sure the path exists in the generated file
+      generated.paths[docPath] = generated.paths[docPath] || {};
+
+      for (const op of Object.keys(docOps)) {
+        const docOp = docOps[op];                 // e.g. put, post
+        const method = op.toLowerCase();
+        generated.paths[docPath][method] = generated.paths[docPath][method] || {};
+       
+        // inside the for (const op of Object.keys(docOps)) loop:
+        if (method === 'put' || method === 'post' || method === 'patch') {
+        // Guarantee body parameter
+        generated.paths[docPath][method].parameters =
+            generated.paths[docPath][method].parameters || [];
+
+        // remove any old body param
+        generated.paths[docPath][method].parameters =
+            generated.paths[docPath][method].parameters.filter(p => p.in !== 'body');
+
+        generated.paths[docPath][method].parameters.push({
+            name: "body",
+            in: "body",
+            required: true,
+            description: "Student information to update",
+            schema: { $ref: "#/definitions/StudentUpdate" }
+        });
+        }
+
+        // Overwrite description if present
+        if (docOp.description) {
+          generated.paths[docPath][method].description = docOp.description;
+        }
+
+        // Overwrite/replace parameters with the ones from doc
+        if (docOp.parameters) {
+          generated.paths[docPath][method].parameters = docOp.parameters;
+        }
+
+        // Merge/overwrite responses
+        if (docOp.responses) {
+          generated.paths[docPath][method].responses = generated.paths[docPath][method].responses || {};
+          for (const code of Object.keys(docOp.responses)) {
+            // ensure codes are strings, e.g. "200"
+            const codeStr = String(code);
+            generated.paths[docPath][method].responses[codeStr] = docOp.responses[code];
+          }
+        }
+
+        // If you added tags or consumes/produces in doc, copy them too
+        if (docOp.tags) generated.paths[docPath][method].tags = docOp.tags;
+        if (docOp.consumes) generated.paths[docPath][method].consumes = docOp.consumes;
+        if (docOp.produces) generated.paths[docPath][method].produces = docOp.produces;
+      }
+    }
+
+    // Optionally merge definitions from doc into generated.definitions (do not overwrite existing)
+    generated.definitions = generated.definitions || {};
+    for (const defName of Object.keys(doc.definitions || {})) {
+      // If def already exists, skip or merge — here we overwrite to ensure our example is used
+      generated.definitions[defName] = doc.definitions[defName];
+    }
+
+    fs.writeFileSync(outputFile, JSON.stringify(generated, null, 2));
+    console.log('swagger.json generated and merged successfully.');
+  } catch (err) {
+    console.error('Error merging swagger.json:', err);
+  }
+}).catch(err => {
+  console.error('swagger-autogen failed:', err);
+});
