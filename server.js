@@ -23,7 +23,10 @@ app.use(cors({
 // Session middleware (required by passport)
 app.use(
     session({
-        store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+        store: MongoStore.create({ 
+            mongoUrl: process.env.MONGO_URI,
+            ttl: 14 * 24 * 60 * 60  
+        }),
         secret: process.env.SESSION_SECRET || "supersecret",
         resave: false,
         saveUninitialized: false
