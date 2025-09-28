@@ -1,7 +1,5 @@
 import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient
-// const dotenv = require('dotenv')
-// dotenv.config()
 
 let database
 const initDatabase = (callback) => {

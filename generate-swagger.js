@@ -1,7 +1,13 @@
 // generate-swagger.js
-const swaggerAutogen = require('swagger-autogen')();
-const fs = require('fs');
-const path = require('path');
+import swaggerAutogen from 'swagger-autogen'
+import fs from 'fs'
+
+import path from 'path';                      // <-- NEW: Import path
+import { fileURLToPath } from 'url';          // <-- NEW: Import fileURLToPath
+
+// 1. Reconstruct __filename and __dirname equivalent for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);  
 
 const outputFile = path.join(__dirname, 'swagger.json');
 const endpointsFiles = [path.join(__dirname, 'routes/index.js')];
@@ -17,7 +23,25 @@ const doc = {
   schemes: ['http', 'https'],
   consumes: ["application/json"],
   produces: ["application/json"],
-
+  securityDefinitions: {
+    OAuth2: {
+      type: "oauth2",
+      flow: "accessCode",    // can also be "implicit" or "password" depending on your setup
+      authorizationUrl: "https://github.com/login/oauth/authorize",
+      tokenUrl: "https://github.com/login/oauth/access_token",
+      scopes: {
+        "read:students": "Read student data",
+        "write:students": "Update student data",
+        "read:courses": "Read course data",
+        "write:courses": "Update course data",
+        "read:instructors": "Read instructor data",
+        "write:instructors": "Update instructor data"
+      }
+    }
+  },
+  security: [
+    { OAuth2: ["read:students", "write:students", "read:courses", "write:courses", "read:instructors", "read:instructors"] }
+  ],
   // SIMPLE examples-only style for swagger-autogen (it infers types from values)
   definitions: {
     StudentUpdate: {

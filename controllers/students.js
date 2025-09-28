@@ -3,7 +3,6 @@ import { ObjectId } from 'mongodb';
 import database from '../data/database.js'
 
 const getAllEnrolledStudents = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase()
         const students = await db.collection('students').find().toArray()
@@ -20,7 +19,6 @@ const getAllEnrolledStudents = async (req, res) => {
     }
 }
 const getOneEnrolledStudent = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         if (!ObjectId.isValid(req.params.id)) {
             return res.status(400).json({message: "Invalid Format!"})
@@ -42,7 +40,6 @@ const getOneEnrolledStudent = async (req, res) => {
 }
 
 const insertOneEnrolledStudent = async (req, res) => {
-    //swagger.tags=['Hello World']
     const db = database.getDatabase()
     const updateEnrolment = {
         first_name: req.body.first_name,
@@ -64,7 +61,6 @@ const insertOneEnrolledStudent = async (req, res) => {
     
 }
 const updateStudentEnrollment = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase();
         const { id } = req.params;
@@ -122,7 +118,6 @@ const updateStudentEnrollment = async (req, res) => {
 };
 
 const deleteOneEnrolledStudent = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase();
         const { id } = req.params;

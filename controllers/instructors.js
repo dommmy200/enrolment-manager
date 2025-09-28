@@ -2,7 +2,6 @@ import { ObjectId } from 'mongodb';
 import database from '../data/database.js'
 
 const getAllInstructors = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase()
         const instructors = await db.collection('instructors').find().toArray()
@@ -19,7 +18,6 @@ const getAllInstructors = async (req, res) => {
     }
 }
 const getOneInstructor = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         if (!ObjectId.isValid(req.params.id)) {
             return res.status(400).json({message: "Invalid Format!"})
@@ -41,7 +39,6 @@ const getOneInstructor = async (req, res) => {
 }
 
 const insertOneInstructor = async (req, res) => {
-    //swagger.tags=['Hello World']
     const db = database.getDatabase()
     const updateEnrolment = {
         first_name: req.body.first_name,
@@ -63,7 +60,6 @@ const insertOneInstructor = async (req, res) => {
     
 }
 const updateInstructors = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase();
         const { id } = req.params;
@@ -113,7 +109,6 @@ const updateInstructors = async (req, res) => {
 };
 
 const deleteOneInstructor = async (req, res) => {
-    //swagger.tags=['Hello World']
     try {
         const db = database.getDatabase();
         const { id } = req.params;
