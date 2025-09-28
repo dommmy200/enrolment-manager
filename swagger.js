@@ -10,6 +10,25 @@ const doc = {
   schemes: ['http', 'https'],
   consumes: ["application/json"],
   produces: ["application/json"],
+  securityDefinitions: {
+    OAuth2: {
+      type: "oauth2",
+      flow: "accessCode",    // can also be "implicit" or "password" depending on your setup
+      authorizationUrl: "https://auth-server.com/oauth/authorize",
+      tokenUrl: "https://auth-server.com/oauth/token",
+      scopes: {
+        "read:students": "Read student data",
+        "write:students": "Update student data",
+        "read:courses": "Read course data",
+        "write:courses": "Update course data",
+        "read:instructors": "Read instructor data",
+        "write:instructors": "Update instructor data"
+      }
+    }
+  },
+  security: [
+    { OAuth2: ["read:students", "write:students", "read:courses", "write:courses", "read:instructors", "read:instructors"] }
+  ],
   definitions: {
     StudentUpdate: {
       first_name: {

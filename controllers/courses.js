@@ -1,6 +1,5 @@
-const mongodb = require('mongodb')
-const database = require('../data/database')
-const { ObjectId } = require('mongodb')
+import { ObjectId } from 'mongodb';
+import database from '../data/database.js'
 
 const getAllCourses = async (req, res) => {
     //swagger.tags=['Hello World']
@@ -135,4 +134,4 @@ const deleteOneCourse = async (req, res) => {
     }
 };
 
-module.exports = { getAllCourses, getOneCourse, insertOneCourse, updateCourses, deleteOneCourse }
+export default { getAllCourses, getOneCourse, insertOneCourse, updateCourses, deleteOneCourse }

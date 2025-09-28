@@ -1,13 +1,16 @@
-const express = require('express')
-const router = require('./routes')
-const dotenv = require('dotenv')
-const mongodb = require('./data/database')
-const cors = require('cors')
+import 'dotenv/config'
+
+import express from 'express'
+import router from './routes/index.js'
+import mongodb from './data/database.js'
+
+import session from 'express-session'
+import passport from './config/auth.js'
+import cors from 'cors'
 
 const port = process.env.PORT || 3000
 
 const app = express()
-dotenv.config()
 app.use(express.json()); // Parse JSON bodies
 
 app.use(cors({
@@ -15,6 +18,17 @@ app.use(cors({
     methods: ["GET", "POST", "UPDATE", "DELETE"],
     allowedHeaders: ["Origin", "X-Requested-Width", "Content-Type", "Z-Keys"]
 }))
+// Session middleware (required by passport)
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || "supersecret",
+        resave: false,
+        saveUninitialized: false
+    })
+);
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use('/', router)
 
 mongodb.initDatabase((err) => {

@@ -1,4 +1,5 @@
-const MongoClient = require('mongodb').MongoClient
+import mongodb from 'mongodb'
+const MongoClient = mongodb.MongoClient
 // const dotenv = require('dotenv')
 // dotenv.config()
 
@@ -23,4 +24,4 @@ const getDatabase = () => {
     }
     return database
 }
-module.exports = { initDatabase, getDatabase }
+export default { initDatabase, getDatabase }
