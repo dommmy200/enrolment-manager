@@ -1,6 +1,7 @@
 import 'dotenv/config'
 
 import express from 'express'
+import MongoStore from 'connect-mongo'
 import router from './routes/index.js'
 import mongodb from './data/database.js'
 
@@ -22,6 +23,7 @@ app.use(cors({
 // Session middleware (required by passport)
 app.use(
     session({
+        store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
         secret: process.env.SESSION_SECRET || "supersecret",
         resave: false,
         saveUninitialized: false
