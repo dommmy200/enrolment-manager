@@ -24,7 +24,7 @@ app.use(cors({
 app.use(
     session({
         store: MongoStore.create({ 
-            mongoUrl: process.env.MONGO_URI,
+            mongoUrl: process.env.MONGO_URL,
             ttl: 14 * 24 * 60 * 60  
         }),
         secret: process.env.SESSION_SECRET || "supersecret",
