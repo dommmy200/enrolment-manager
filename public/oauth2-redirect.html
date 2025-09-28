@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth2 Redirect</title>
+  </head>
+  <body>
+    <script>
+      'use strict';
+      function run () {
+        var oauth2 = window.opener.swaggerUIRedirectOauth2;
+        var sentState = oauth2.state;
+        var redirectUrl = window.location.href;
+
+        var qp = redirectUrl.split('?');
+        qp = qp.length > 1 ? qp[1] : window.location.hash.substring(1);
+        var params = {};
+        qp.split("&").forEach(function (v) {
+          var kv = v.split("=");
+          params[kv[0]] = decodeURIComponent(kv[1]);
+        });
+
+        var oauthState = params.state;
+        if (sentState !== oauthState) {
+          oauth2.errCb({ message: "OAuth2 state mismatch" });
+          return;
+        }
+
+        if (params.code) {
+          oauth2.callback({ code: params.code });
+        } else {
+          oauth2.errCb({ message: params.error || "OAuth2 error" });
+        }
+        window.close();
+      }
+      run();
+    </script>
+  </body>
+</html>

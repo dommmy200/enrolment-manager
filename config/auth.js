@@ -3,27 +3,6 @@ import {Strategy as GitHubStrategy} from 'passport-github2';
 console.log("GitHub Client ID:", process.env.GITHUB_CLIENT_ID);
 console.log("GitHub Client Secret:", process.env.GITHUB_CLIENT_SECRET ? "Loaded ✅" : "Missing ❌");
 
-// passport.use(
-//   new GitHubStrategy(
-//     {
-//       clientID: process.env.GITHUB_CLIENT_ID,     // from Google Cloud
-//       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-//       callbackURL:"http://localhost:3000/auth/github/callback"
-//     },
-//     (accessToken, refreshToken, profile, done) => {
-//       // Here you’d lookup/create the user in your DB
-//       const user = {
-//         id: profile.id,
-//         username: profile.username,
-//         name: profile.displayName || profile.username,
-//         email: profile.emails && profile.emails.length > 0
-//           ? profile.emails[0].value
-//           : null // fallback if no email
-//       };
-//       return done(null, user)
-//     }
-//   )
-// )
 passport.use(
   new GitHubStrategy(
     {

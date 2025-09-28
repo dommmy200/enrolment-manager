@@ -1,5 +1,5 @@
-const fs = require("fs");
-const swaggerAutogen = require('swagger-autogen')();
+import fs from "fs"
+import swaggerAutogen from 'swagger-autogen'
 
 const doc = {
   info: {
@@ -11,21 +11,16 @@ const doc = {
   consumes: ["application/json"],
   produces: ["application/json"],
   securityDefinitions: {
-    OAuth2: {
-      type: "oauth2",
-      flow: "accessCode",    // can also be "implicit" or "password" depending on your setup
-      authorizationUrl: "https://auth-server.com/oauth/authorize",
-      tokenUrl: "https://auth-server.com/oauth/token",
-      scopes: {
-        "read:students": "Read student data",
-        "write:students": "Update student data",
-        "read:courses": "Read course data",
-        "write:courses": "Update course data",
-        "read:instructors": "Read instructor data",
-        "write:instructors": "Update instructor data"
-      }
+    BearerAuth: {
+      type: "apiKey",
+      name: "Authorization",
+      in: "header",
+      description: "Enter your JWT as: Bearer <token>"
     }
   },
+  security: [
+    { BearerAuth: [] }
+  ],
   security: [
     { OAuth2: ["read:students", "write:students", "read:courses", "write:courses", "read:instructors", "read:instructors"] }
   ],
@@ -88,6 +83,11 @@ const doc = {
             description: "Student information to update",
             schema: { $ref: "#/definitions/StudentUpdate" }
           }
+        ],
+        security: [
+            {
+                Bearer: ['write:students'] // Applies the Bearer scheme and documents required scope
+            }
         ],
         responses: {
           200: {
