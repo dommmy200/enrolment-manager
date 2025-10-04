@@ -154,7 +154,7 @@ router.put('/update/:id',
 
 router.delete('/delete/:id',
     ensureAuthenticated, 
-    ensureScope(["delete:courses"]),
+    ensureScope(["write:courses", "delete:courses"]),
     coursesController.deleteOneCourse)
 
 export default router

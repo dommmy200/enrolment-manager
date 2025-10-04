@@ -50,7 +50,10 @@ const insertOneCourse = async (req, res) => {
         semester: req.body.semester
     }
     await db.collection('courses').insertOne(updateEnrolment).then(result =>{
-        res.status(201).json(result)
+        res.status(201).json({
+            message: "Course created successfully",
+            course_id: `${result.insertedId}`
+        })
     }).catch(err => {
         res.status(500).json({
             message: err.message
