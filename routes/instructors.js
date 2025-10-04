@@ -3,54 +3,149 @@ import ensureAuthenticated, { ensureScope } from "../middleware/ensureAuth.js";
 import instructorController from '../controllers/instructors.js'
 const router = express.Router()
 
-// GET /instructors/
-// #swagger.tags = ['Instructors']
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Instructor:
+ *       type: object
+ *       properties:
+ *         first_name:
+ *           type: string
+ *           example: Adewale
+ *         last_name:
+ *           type: string
+ *           example: Ogunleye
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: adewale.ogunleye@example.com
+ *         phone_number:
+ *           type: string
+ *           example: +234809870987
+ *         course:
+ *           type: string
+ *           example: Medic
+ *         department:
+ *           type: string
+ *           example: Computer Science
+ *         hire_date:
+ *           type: string
+ *           example: 20/01/2024
+ *         status:
+ *           type: string
+ *           example: Active
+ */
+
+/**
+ * @swagger
+ * /instructors/:
+ *   get:
+ *     summary: Get all instructors
+ *     tags: [Instructors]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of instructors
+ *
+ * /instructors/{id}:
+ *   get:
+ *     summary: Get a single instructor by ID
+ *     tags: [Instructors]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A instructor record
+ *       404:
+ *         description: Instructor not found
+ *
+ * /instructors/post:
+ *   post:
+ *     summary: Create a new instructor
+ *     tags: [Instructors]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Instructor'
+ *     responses:
+ *       201:
+ *         description: Instructor created
+ *
+ * /instructors/update/{id}:
+ *   put:
+ *     summary: Update an existing instructor
+ *     tags: [Instructors]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Instructor'
+ *     responses:
+ *       200:
+ *         description: Instructor updated
+ *       404:
+ *         description: Instructor not found
+ *
+ * /instructors/delete/{id}:
+ *   delete:
+ *     summary: Delete a instructor
+ *     tags: [Instructors]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Instructor deleted
+ *       404:
+ *         description: Instructor not found
+ */
+
 router.get('/',
     instructorController.getAllInstructors)
 
-// GET /instructors/
-// #swagger.tags = ['Instructors']
 router.get('/:id',
     instructorController.getOneInstructor)
-// PUT /instructors/update/:id
-// #swagger.tags = ['Instructors']
-// #swagger.security = [{ "BearerAuth": [] }]
-// #swagger.parameters['body'] = {
-//   in: 'body',
-//   description: 'Course data to create',
-//   required: true,
-//   schema: {
-//      course_name: "Introductory to Biology",
-//      description: "Covers basics of cell biology and genetics.",
-//      credit: "3",
-//      department: "Biological Sciences",
-//      instructor-id: Object 68d87eb28b3ef5ea611c00bc,
-//      semester: "Fall 2025",
-//      status:"active",
-//      created_at: "2025-09-27T10:15:00.000+00:00",
-//      updated_at: "2025-09-27T10:15:00.000+00:00",
-//      prerequisites:[ math001, chem010]
-//   }
-// }
+
 router.post('/post',
     ensureAuthenticated,
-    ensureScope(["write: instructors"]),
+    ensureScope(["write:instructors"]),
      instructorController.insertOneInstructor)
 
-// PUT /instructors/update/:id
-// #swagger.tags = ['Instructors']
-// #swagger.security = [{ "BearerAuth": [] }]
 router.put('/update/:id',
     ensureAuthenticated,
-    ensureScope(["write: instructors"]),
+    ensureScope(["write:instructors"]),
      instructorController.updateInstructors)
 
-// PUT /instructors/update/:id
-// #swagger.tags = ['Instructors']
-// #swagger.security = [{ "BearerAuth": [] }]
 router.delete('/delete/:id',
     ensureAuthenticated,
-    ensureScope(["write: instructors"]),
+    ensureScope(["delete:instructors"]),
      instructorController.deleteOneInstructor)
 
 export default router
+

@@ -4,10 +4,15 @@ import express from 'express'
 import MongoStore from 'connect-mongo'
 import router from './routes/index.js'
 import mongodb from './data/database.js'
-
 import session from 'express-session'
 import passport from './config/auth.js'
+import authRouter from './routes/authRoutes.js'
 import cors from 'cors'
+
+import swaggerRouter from "./routes/swagger.js";
+import studentRoutes from "./routes/students.js";
+import instructorRoutes from "./routes/instructors.js";
+import courseRoutes from "./routes/courses.js";
 
 const port = process.env.PORT || 3000
 
@@ -18,7 +23,7 @@ app.use(express.static("public"));
 app.use(cors({
     origin: '*',
     methods: ["GET", "POST", "UPDATE", "DELETE"],
-    allowedHeaders: ["Origin", "X-Requested-Width", "Content-Type", "Z-Keys"]
+   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Authorization"]
 }))
 // Session middleware (required by passport)
 app.use(
@@ -36,6 +41,14 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/', router)
+app.use("/auth", authRouter)
+// Swagger
+app.use(swaggerRouter);
+
+// Routes
+app.use("/students", studentRoutes);
+app.use("/instructors", instructorRoutes);
+app.use("/courses", courseRoutes);
 
 mongodb.initDatabase((err) => {
     if (err) {
