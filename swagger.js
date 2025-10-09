@@ -113,7 +113,7 @@ const doc = {
     title: 'Enrollment Manager API',
     description: "API for managing students, courses, and instructors",
   },
-  host: 'enrolment-manager.onrender.com/',
+  host: 'enrolment-manager.onrender.com',
   schemes: ['https'],
 };
 
