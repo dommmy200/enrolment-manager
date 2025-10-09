@@ -5,7 +5,7 @@
     "description": "API for managing students, courses, and instructors",
     "version": "1.0.0"
   },
-  "host": "enrolment-manager.onrender.com/",
+  "host": "enrolment-manager.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
@@ -54,7 +54,7 @@
         }
       }
     },
-    "/authauth/github/callback": {
+    "/auth/auth/github/callback": {
       "get": {
         "description": "",
         "responses": {

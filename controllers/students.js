@@ -160,6 +160,7 @@ const getAllEnrolledStudents = async (req, res) => {
         res.status(200).json(students);
     } catch (error) {
         // Handle any unexpected server errors
+        console.error('Error fetching students:', err);
         res.status(500).json({message: 'Some error occurred while retrieving the Students.'});
     }
 }; 
