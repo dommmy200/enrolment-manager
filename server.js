@@ -100,15 +100,53 @@ app.get('/', (req, res) => {
 });
 
 // GitHub OAuth callback route
-app.get(
-  '/github/callback',
-  passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
-  (req, res) => {
-    req.session.user = req.user; // Store user info in session after successful login
-    res.redirect('/');           // Redirect to homepage
-  }
-);
+// app.get(
+//   '/github/callback',
+//   passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
+//   (req, res) => {
+//     req.session.user = req.user; // Store user info in session after successful login
+//     res.redirect('/');           // Redirect to homepage
+//   }
+// );
+router.get('/callback', async (req, res) => {
+  const code = req.query.code;
 
+  if (!code) {
+    return res.status(400).send('Missing code parameter');
+  }
+
+  try {
+    const response = await fetch('https://github.com/login/oauth/access_token', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code,
+        redirect_uri: process.env.GITHUB_CALLBACK_URL,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      console.error('GitHub token error:', data.error_description);
+      return res.status(400).send(data.error_description);
+    }
+
+    const accessToken = data.access_token;
+    // Save token in session
+    req.session.user = { accessToken };
+
+    res.redirect('/dashboard'); // or wherever your app should go next
+  } catch (err) {
+    console.error('GitHub callback error:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 // ===============================================
 // GLOBAL ERROR HANDLING
