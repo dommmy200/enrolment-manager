@@ -36,10 +36,10 @@ app.use(bodyParser.urlencoded({ extended: true })) // Parse URL-encoded data (fo
 
   // Enable persistent login sessions
   app.use(passport.session())
+  app.use('/', authRoutes);
   app.use(cors({origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE']}))
   // Mount main application routes
   app.use('/', router)
-  app.use('/', authRoutes);
 
 // ===============================================
 // ROUTES
