@@ -11,9 +11,9 @@ const initDatabase = (callback) => {
     MongoClient.connect(process.env.MONGO_URL).then((client) => {
         database = client.db(process.env.DB_NAME)
         return callback(null, database)
-    }).catch((err) => {
-        console.error('No database was found. Initiate Call!', err);
-        callback(err)
+    }).catch((error) => {
+        console.error('No database was found. Initiate Call!', error);
+        callback(error)
     }) 
 }
 const getDatabase = () => {
