@@ -2,6 +2,7 @@
  * Validation rules for Actor data.
  * Ensures all required fields are present and correctly formatted.
  */
+import { validationResult } from 'express-validator';
 import { body } from 'express-validator';
 
 /**
