@@ -11,19 +11,19 @@ router.get('/',
 router.get('/:id',
     instructorController.getOneInstructor)
 
-router.post('/post',
+router.post('/',
     isAuthenticated,
     instructorRules(), 
     validate,
     instructorController.insertOneInstructor)
 
-router.put('/update/:id',
+router.put('/:id',
     isAuthenticated,
     instructorRules(), 
     validate,
     instructorController.updateInstructors)
 
-router.delete('/delete/:id',
+router.delete('/:id',
     isAuthenticated,
     instructorRules(), 
     validate,

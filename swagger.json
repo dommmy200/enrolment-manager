@@ -94,6 +94,46 @@
             "description": "Internal Server Error"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Students"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "age": {
+                  "example": "any"
+                },
+                "course": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/students/{id}": {
@@ -124,66 +164,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/students/post": {
-      "post": {
-        "tags": [
-          "Students"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "first_name": {
-                  "example": "any"
-                },
-                "last_name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phone_number": {
-                  "example": "any"
-                },
-                "course": {
-                  "example": "any"
-                },
-                "enrolment_date": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "gpa": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/students/update/{id}": {
+      },
       "put": {
         "tags": [
           "Students"
@@ -195,39 +176,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "first_name": {
-                  "example": "any"
-                },
-                "last_name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phone_number": {
-                  "example": "any"
-                },
-                "course": {
-                  "example": "any"
-                },
-                "enrolment_date": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "gpa": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -247,9 +195,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/students/delete/{id}": {
+      },
       "delete": {
         "tags": [
           "Students"
@@ -302,39 +248,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/courses/{id}": {
-      "get": {
-        "tags": [
-          "Courses"
-        ],
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/courses/post": {
+      },
       "post": {
         "tags": [
           "Courses"
@@ -388,7 +302,35 @@
         }
       }
     },
-    "/courses/update/{id}": {
+    "/courses/{id}": {
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Courses"
@@ -449,9 +391,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/courses/delete/{id}": {
+      },
       "delete": {
         "tags": [
           "Courses"
@@ -504,39 +444,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/instructors/{id}": {
-      "get": {
-        "tags": [
-          "Instructors"
-        ],
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/instructors/post": {
+      },
       "post": {
         "tags": [
           "Instructors"
@@ -593,7 +501,35 @@
         }
       }
     },
-    "/instructors/update/{id}": {
+    "/instructors/{id}": {
+      "get": {
+        "tags": [
+          "Instructors"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Instructors"
@@ -657,9 +593,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/instructors/delete/{id}": {
+      },
       "delete": {
         "tags": [
           "Instructors"
