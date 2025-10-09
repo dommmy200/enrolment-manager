@@ -12,77 +12,7 @@ import passport from './config/auth.js'
 import session from 'express-session'
 import { Strategy as GitHubStrategy } from 'passport-github2' // OAuth GitHub authentication
 import router from './routes/index.js'
-
-
-// import MongoStore from 'connect-mongo'
-// import authRouter from './routes/authRoutes.js'
-
-// import swaggerRouter from "./routes/swagger.js";
-// import studentRoutes from "./routes/students.js";
-// import instructorRoutes from "./routes/instructors.js";
-// import courseRoutes from "./routes/courses.js";
-
 const port = process.env.PORT || 3000
-
-// app.use(express.json()); // Parse JSON bodies
-// app.use(express.static("public"));
-
-// app.use(cors({
-//     origin: '*',
-//     methods: ["GET", "POST", "UPDATE", "DELETE"],
-//    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Authorization"]
-// }))
-// // Session middleware (required by passport)
-// app.use(
-//     session({
-//         store: MongoStore.create({ 
-//             mongoUrl: process.env.MONGO_URL,
-//             ttl: 14 * 24 * 60 * 60  
-//         }),
-//         secret: process.env.SESSION_SECRET || "supersecret",
-//         resave: false,
-//         saveUninitialized: false
-//     })
-// );
-// app.use(passport.initialize())
-// app.use(passport.session())
-
-// app.use('/', router)
-// app.use("/auth", authRouter)
-// // Swagger
-// app.use(swaggerRouter);
-
-// // Routes
-// app.use("/students", studentRoutes);
-// app.use("/instructors", instructorRoutes);
-// app.use("/courses", courseRoutes);
-
-// mongodb.initDatabase((err) => {
-//     if (err) {
-//         console.log(err)
-//         process.exit(1)
-//     } else {
-//         app.listen(port, () =>  {
-//             console.log(`Database is connected. Server is live on Port: ${port}`)
-//              console.log(`API Documentation available at: http://localhost:${port}/api-docs\n`)
-//         })
-//     }
-// })
-
-
-// ===============================================
-// IMPORT REQUIRED MODULES
-// ===============================================
-// const express = require('express');
-// const app = express();
-// const bodyParser = require('body-parser');
-// const mongodb = require('./data/database'); // Database connection setup
-// const cors = require('cors');
-// const passport = require('passport');
-// const session = require('express-session');
-// const GitHubStrategy = require('passport-github2').Strategy; // OAuth GitHub authentication
-// const port = process.env.PORT || 5000; // Define port (use env variable or default 5000)
-
 
 // ===============================================
 // MIDDLEWARE CONFIGURATION
