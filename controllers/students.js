@@ -55,21 +55,14 @@ const getOneEnrolledStudent = async (req, res) => {
 const insertAStudent = async (req, res) => {
     //#swagger.tags = ['Students']
     try {
-        // Create new student object from request body
-        // const insertStudent = {
-        //     first_name: req.body.first_name,
-        //     last_name: req.body.last_name,
-        //     email: req.body.email,
-        //     phone_number: req.body.phone_number,
-        //     course: req.body.course,
-        //     enrolment_date: req.body.enrolment_date,
-        //     status: req.body.status,
-        //     gpa: req.body.gpa
-        // }
+
+        console.log("Incoming data:", req.body);
         const db = mongodb.getDatabase();
         const student = req.body;
-        if (!student.name || !student.age || !student.course) {
-            return res.status(400).json({ message: 'Missing required fields: name, age, or course' });
+        if (!student.first_name || !student.last_name || !student.email || !student.course) {
+            return res.status(400).json({ 
+                message: 'Missing required fields: first_name, last_name, email, or course' 
+            });
         }
         // Insert new course into MongoDB collection
         const result = await db.collection('students').insertOne(student);
@@ -95,19 +88,7 @@ const updateStudentEnrollment = async (req, res) => {
                 message: 'Invalid student ID format'
             });
         }
-        
-        // // Convert ID to ObjectId and prepare update data
-        // const studentId = new ObjectId(req.params.id);
-        // const updateStudent = {
-        //     first_name: req.body.first_name,
-        //     last_name: req.body.last_name,
-        //     email: req.body.email,
-        //     phone_number: req.body.phone_number,
-        //     course: req.body.course,
-        //     enrolment_date: req.body.enrolment_date,
-        //     status: req.body.status,
-        //     gpa: req.body.gpa
-        // }
+
         const updateStudent = req.body;
         const db = mongodb.getDatabase();
         // Update Course document by ID
@@ -124,14 +105,12 @@ const updateStudentEnrollment = async (req, res) => {
         }
         
         // Return success message depending on update result
-        if (result.modifiedCount === 0) {
-            res.status(200).json({
-                message: 'No changes made to the Student'
-            });
+        if (result.modifiedCount > 0) {
+            res.status(200).json({ message: 'No changes made to the Student'});
+        }
         res.status(200).json({
             message: 'Student updated successfully'
         });
-        }
     } catch (error) {
         // Log and handle any update errors
         console.error('Error updating Student', error);
@@ -172,5 +151,3 @@ const deleteOneEnrolledStudent = async (req, res) => {
     }
 };
 export default { getAllEnrolledStudents, getOneEnrolledStudent, insertAStudent, updateStudentEnrollment, deleteOneEnrolledStudent }
-
-// export default { getAllCourses, getOneCourse, insertOneCourse, updateCourses, deleteOneCourse }
