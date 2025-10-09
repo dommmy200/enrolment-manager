@@ -1,0 +1,44 @@
+//---ACTORS--- complete the links below with valid values from the actual database
+
+
+### Get all actors 
+GET http://localhost:3000/students/ HTTP/1.1
+
+### Get by id -- example: http://localhost:5000/students/68ce23b2fb19f10ed2099214
+GET http://localhost:3000/students/ HTTP/1.1
+
+
+
+### Post actor
+POST http://localhost:3000/students/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "Odudua1",
+    "last_name": "Yoruba1",
+    "email": "odeh.abah@example.com",
+    "phone_number": "+2348098765432",
+    "course": "Mechanical Engineering",
+    "enrollment_date": "2023-11-20",
+    "status": "Graduated",
+    "gpa": 3.60
+}
+
+### Update actor -- complete the link with a valid ID and another example info
+PUT http://localhost:3000/students/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "Odu",
+    "last_name": "Yoru",
+    "email": "abrahimttt.mukaila@example.com",
+    "phone_number": "+234809870987",
+    "course": "Medic",
+    "enrollment_date": "2020-11-20",
+    "status": "Graduated",
+    "gpa": 4.00
+
+}
+
+### Delete actor -- complete the link with a valid ID
+DELETE http://localhost:3000/students/ HTTP/1.1

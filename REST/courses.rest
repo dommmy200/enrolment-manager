@@ -1,0 +1,46 @@
+//---ACTORS--- complete the links below with valid values from the actual database
+
+
+### Get all actors 
+GET http://localhost:3000/courses/ HTTP/1.1
+
+### Get by id -- example: http://localhost:5000/courses/68ce23b2fb19f10ed2099214
+GET http://localhost:3000/courses/68d881dc2a70b446c0f7d8ae HTTP/1.1
+
+
+
+### Post actor
+POST http://localhost:3000/courses/post HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjEyNTUzNTIiLCJzY29wZXMiOlsicmVhZDpzdHVkZW50cyIsIndyaXRlOnN0dWRlbnRzIiwiZGVsZXRlOnN0dWRlbnRzIiwicmVhZDpjb3Vyc2VzIiwid3JpdGU6Y291cnNlcyIsImRlbGV0ZTpjb3Vyc2VzIiwicmVhZDppbnN0cnVjdG9ycyIsIndyaXRlOmluc3RydWN0b3JzIiwiZGVsZXRlOmluc3RydWN0b3JzIl0sImlhdCI6MTc2MDAwODExMywiZXhwIjoxNzYwMDExNzEzLCJpc3MiOiJzY2hvb2wtYXBpIn0.D8fHAWPIdzdVGRO3wWdziA1eQ0ZrjBOlWVSOgcU1qBc
+
+{
+    "course_name": " Introductory to Anthropology",
+    "description": "Covers basics of General Anthropology.",
+    "department": "General Anthropology",
+    "semester": "Spring 2025",
+    "created_at": "2024-09-27T10:15:00.000Z",
+    "credit": "1",
+    "instructor-id": "68d87eb28b3ef5ea611c0099",
+    "prerequisites": [
+    "MATHS010",
+    "ENG110"
+    ],
+    "status": "active",
+    "updated_at": "2025-10-27T10:15:00.000Z"
+}
+
+### Update actor -- complete the link with a valid ID and another example info
+PUT http://localhost:3000/courses/ HTTP/1.1
+Content-Type: application/json
+
+    {
+        "name": "Leonardo DiCaprio",
+        "birthYear": 1974,
+        "nationality": "American",
+        "knownFor": ["Inception", "Titanic", "The Revenant"],
+        "awards": ["Academy Award", "Golden Globe Award"]
+    }
+
+### Delete actor -- complete the link with a valid ID
+DELETE http://localhost:3000/courses/ HTTP/1.1
