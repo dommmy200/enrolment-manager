@@ -5,7 +5,7 @@
 GET http://localhost:3000/students/ HTTP/1.1
 
 ### Get by id -- example: http://localhost:5000/students/68ce23b2fb19f10ed2099214
-GET http://localhost:3000/students/ HTTP/1.1
+GET http://localhost:3000/students/68cf25a08222d64a3dfa121c HTTP/1.1
 
 
 
@@ -14,7 +14,7 @@ POST http://localhost:3000/students/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "first_name": "Odudua1",
+    "first_name": "Odudua13",
     "last_name": "Yoruba1",
     "email": "odeh.abah@example.com",
     "phone_number": "+2348098765432",
