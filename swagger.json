@@ -107,10 +107,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "first_name": {
                   "example": "any"
                 },
-                "age": {
+                "last_name": {
+                  "example": "any"
+                },
+                "email": {
                   "example": "any"
                 },
                 "course": {
