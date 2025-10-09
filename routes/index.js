@@ -17,40 +17,6 @@ router.use('/', swaggerRoute)
 router.use('/students', studentsRoute)
 router.use('/courses', coursesRoute)
 router.use('/instructors', instructorRoute)
-
-
-
-
-
-
-
-
-// Import required modules
-// const express = require('express');
-// const router = express.Router();
-
-
-/**
- * ===================================
- * ROUTE MOUNTING
- * ===================================
- * These routes define how different parts of the API are structured.
- * Each route group is delegated to its respective router file for modularity.
- * 
- * Example:
- *   - /actors → handled by routes/actors.js
- *   - /directors → handled by routes/directors.js
- *   - /genres → handled by routes/genres.js
- *   - /movies → handled by routes/movies.js
- *   - / → includes Swagger documentation and default home route
- */
-
-// router.use('/actors', require('./actors'));
-// router.use('/directors', require('./directors'));
-// router.use('/genres', require('./genres'));
-// router.use('/movies', require('./movies'));
-// router.use('/', require('./swagger')); // Swagger documentation route
-
 /**
  * ===================================
  * ROOT ROUTE (Home Page)
