@@ -1,6 +1,6 @@
 import express from "express"
 import passport from 'passport'
-import authRoutes from "./authRoutes.js"
+import authRoutes from "./auth.js"
 import studentsRoute from './students.js'
 import coursesRoute from './courses.js'
 import instructorRoute from './instructors.js'
