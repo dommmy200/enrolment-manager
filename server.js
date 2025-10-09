@@ -67,13 +67,11 @@ passport.use(new GitHubStrategy(
   {
     clientID: process.env.GITHUB_CLIENT_ID,       // GitHub OAuth Client ID
     clientSecret: process.env.GITHUB_CLIENT_SECRET, // GitHub OAuth Secret
-    callbackURL: process.env.CALLBACK_URL         // URL to handle GitHub OAuth callback
-  },
-  // This callback executes after GitHub authentication is successful
-  function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
-  }
-));
+    callbackURL: process.env.CALLBACK_URL || "https://enrolment-manager.onrender.com/github/callback"
+  },(accessToken, refreshToken, profile, done) => {
+  console.log('✅ GitHub login success:', profile.username);
+  return done(null, profile);
+}))
 
 // Serialize user info into the session
 passport.serializeUser((user, done) => {
@@ -108,7 +106,7 @@ app.get('/', (req, res) => {
 //     res.redirect('/');           // Redirect to homepage
 //   }
 // );
-router.get('/callback', async (req, res) => {
+app.get('/github/callback', async (req, res) => {
   const code = req.query.code;
 
   if (!code) {
@@ -126,7 +124,7 @@ router.get('/callback', async (req, res) => {
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET,
         code,
-        redirect_uri: process.env.GITHUB_CALLBACK_URL,
+        redirect_uri: process.env.CALLBACK_URL,
       }),
     });
 
@@ -141,7 +139,7 @@ router.get('/callback', async (req, res) => {
     // Save token in session
     req.session.user = { accessToken };
 
-    res.redirect('/dashboard'); // or wherever your app should go next
+    res.redirect('/'); // or wherever your app should go next
   } catch (err) {
     console.error('GitHub callback error:', err);
     res.status(500).send('Internal Server Error');
