@@ -12,21 +12,21 @@ router.get('/',
 router.get('/:id',
     studentController.getOneEnrolledStudent)
 
-router.post('/post',
+router.post('/',
     isAuthenticated,
     studentRules(),
     validate,
     studentController.insertAStudent)
 
 
-router.put('/update/:id',
+router.put('/:id',
     isAuthenticated,
     studentRules(), 
     validate,
     studentController.updateStudentEnrollment)
 
 
-router.delete('/delete/:id',
+router.delete('/:id',
     isAuthenticated,
     studentRules(),
     validate,
