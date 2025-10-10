@@ -77,9 +77,9 @@
     "/students/": {
       "get": {
         "tags": [
-          "All Students"
+          "Students"
         ],
-        "description": "",
+        "description": "Retrieve all Students available in the system",
         "produces": [
           "application/json"
         ],
@@ -97,41 +97,80 @@
       },
       "post": {
         "tags": [
-          "Create Student"
+          "Students"
         ],
-        "description": "",
+        "description": "Add a new student to the catalog",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "description": "Student data to add",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "first_name": {
-                  "example": "any"
-                },
-                "last_name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "course": {
-                  "example": "any"
+                "example": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "example": "Aisha"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "example": "Garba"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "aisha.garba@example.com"
+                    },
+                    "phone_number": {
+                      "type": "string",
+                      "example": "+2348034567890"
+                    },
+                    "course": {
+                      "type": "string",
+                      "example": "Economics"
+                    },
+                    "enrollment_date": {
+                      "type": "string",
+                      "example": "2025-02-28"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Active"
+                    },
+                    "gpa": {
+                      "type": "number",
+                      "example": 3.55
+                    }
+                  }
                 }
               }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
-            "description": "Created"
+            "description": "Student created successfully"
           },
           "400": {
             "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -142,9 +181,9 @@
     "/students/{id}": {
       "get": {
         "tags": [
-          "One Student"
+          "Students"
         ],
-        "description": "",
+        "description": "Retrieve a specific Student by ID",
         "produces": [
           "application/json"
         ],
@@ -170,20 +209,75 @@
       },
       "put": {
         "tags": [
-          "Update Student"
+          "Students"
         ],
-        "description": "",
+        "description": "Update an existing student",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Student ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated student data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "example": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "example": "Aisha"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "example": "Garba"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "aisha.garba@example.com"
+                    },
+                    "phone_number": {
+                      "type": "string",
+                      "example": "+2348034567890"
+                    },
+                    "course": {
+                      "type": "string",
+                      "example": "Economics"
+                    },
+                    "enrollment_date": {
+                      "type": "string",
+                      "example": "2025-02-28"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Active"
+                    },
+                    "gpa": {
+                      "type": "number",
+                      "example": 3.75
+                    }
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Student updated successfully"
           },
           "400": {
             "description": "Bad Request"
@@ -201,9 +295,9 @@
       },
       "delete": {
         "tags": [
-          "Delete Student"
+          "Students"
         ],
-        "description": "",
+        "description": "Delete a Student by ID",
         "parameters": [
           {
             "name": "id",
@@ -234,9 +328,9 @@
     "/courses/": {
       "get": {
         "tags": [
-          "All Courses"
+          "Courses"
         ],
-        "description": "",
+        "description": "Retrieve all courses available in the system",
         "produces": [
           "application/json"
         ],
@@ -256,39 +350,74 @@
         "tags": [
           "Courses"
         ],
-        "description": "",
+        "description": "Add a new Course to the catalog",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "description": "Course data to add",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "req": {
-                  "example": "any"
-                },
-                "instructor": {
-                  "example": "any"
-                },
-                "credits": {
-                  "example": "any"
-                },
-                "department": {
-                  "example": "any"
+                "example": {
+                  "type": "object",
+                  "properties": {
+                    "course_name": {
+                      "type": "string",
+                      "example": "Introductory to Sciences"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Covers basics of General Sciences."
+                    },
+                    "department": {
+                      "type": "string",
+                      "example": "General Sciences"
+                    },
+                    "semester": {
+                      "type": "string",
+                      "example": "Spring 2025"
+                    },
+                    "credit": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "instructor_id": {
+                      "type": "string",
+                      "example": "68d87eb28b3ef5ea611c0099"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Active"
+                    }
+                  }
                 }
               }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
-            "description": "Created"
+            "description": "Course created successfully"
           },
           "400": {
             "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -301,7 +430,7 @@
         "tags": [
           "Courses"
         ],
-        "description": "",
+        "description": "Retrieve a specific course by ID",
         "produces": [
           "application/json"
         ],
@@ -329,13 +458,64 @@
         "tags": [
           "Courses"
         ],
-        "description": "",
+        "description": "Update an existing Course",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Course ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated Course data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "example": {
+                  "type": "object",
+                  "properties": {
+                    "course_name": {
+                      "type": "string",
+                      "example": "Introductory to Sciences"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Covers basics of General Sciences."
+                    },
+                    "department": {
+                      "type": "string",
+                      "example": "General Sciences"
+                    },
+                    "semester": {
+                      "type": "string",
+                      "example": "Spring 2025"
+                    },
+                    "credit": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "instructor_id": {
+                      "type": "string",
+                      "example": "68d87eb28b3ef5ea611c0099"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Active"
+                    }
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -360,7 +540,7 @@
         "tags": [
           "Courses"
         ],
-        "description": "",
+        "description": "Delete a course by ID",
         "parameters": [
           {
             "name": "id",
@@ -391,9 +571,9 @@
     "/instructors/": {
       "get": {
         "tags": [
-          "All Instructors"
+          "Instructors"
         ],
-        "description": "",
+        "description": "Retrieve all Instructors available in the system",
         "produces": [
           "application/json"
         ],
@@ -411,33 +591,69 @@
       },
       "post": {
         "tags": [
-          "Create Instructor"
+          "Instructors"
         ],
-        "description": "",
+        "description": "Add a new Instructor to the catalog",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "description": "Instructor data to add",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "first_name": {
-                  "example": "any"
-                },
-                "last_name": {
-                  "example": "any"
-                },
-                "phone_number": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
+                "example": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "example": "David"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "example": "Ogunleye"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "adewale.ogunleye@example.com"
+                    },
+                    "phone_number": {
+                      "type": "string",
+                      "example": "+234809870987"
+                    },
+                    "course": {
+                      "type": "string",
+                      "example": "Medic"
+                    },
+                    "department": {
+                      "type": "string",
+                      "example": "Computer Science"
+                    },
+                    "hire_date": {
+                      "type": "string",
+                      "example": "2024-01-20"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Active"
+                    }
+                  }
                 }
               }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created"
           },
@@ -446,6 +662,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -456,9 +675,9 @@
     "/instructors/{id}": {
       "get": {
         "tags": [
-          "One Instructor"
+          "Instructors"
         ],
-        "description": "",
+        "description": "Retrieve a specific available in the system",
         "produces": [
           "application/json"
         ],
@@ -484,15 +703,70 @@
       },
       "put": {
         "tags": [
-          "Update Instructor"
+          "Instructors"
         ],
-        "description": "",
+        "description": "Update an existing Instructor",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Instructor ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated Instructor data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "example": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "example": "David"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "example": "Ogunleye"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "adewale.ogunleye@example.com"
+                    },
+                    "phone_number": {
+                      "type": "string",
+                      "example": "+234809870987"
+                    },
+                    "course": {
+                      "type": "string",
+                      "example": "Medic"
+                    },
+                    "department": {
+                      "type": "string",
+                      "example": "Computer Science"
+                    },
+                    "hire_date": {
+                      "type": "string",
+                      "example": "2024-01-20"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Active"
+                    }
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -515,9 +789,9 @@
       },
       "delete": {
         "tags": [
-          "Delete Instructor"
+          "Instructors"
         ],
-        "description": "",
+        "description": "Delete an Instructor by ID",
         "parameters": [
           {
             "name": "id",

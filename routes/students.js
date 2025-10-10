@@ -12,6 +12,30 @@ router.get('/:id',
     studentController.getOneEnrolledStudent)
 
 router.post('/',
+    /*
+        #swagger.tags = ['Students']
+        #swagger.description = 'Add a new student to the catalog'
+        #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Student data to add',
+          required: true,
+          schema: {
+            example: {
+              first_name: "Aisha",
+              last_name: "Garba",
+              email: "aisha.garba@example.com",
+              phone_number: "+2348034567890",
+              course: "Economics",
+              enrollment_date: "2025-02-28",
+              status: "Active",
+              gpa: 3.55
+            }
+          }
+        }
+        #swagger.responses[201] = {
+          description: 'Student created successfully'
+        }
+      */
     isAuthenticated,
     studentRules(),
     validate,
@@ -19,6 +43,31 @@ router.post('/',
 
 
 router.put('/:id',
+    /*
+    #swagger.tags = ['Students']
+    #swagger.description = 'Update an existing student'
+    #swagger.parameters['id'] = { in: 'path', description: 'Student ID', required: true }
+    #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Updated student data',
+      required: true,
+      schema: {
+        example: {
+          first_name: "Aisha",
+          last_name: "Garba",
+          email: "aisha.garba@example.com",
+          phone_number: "+2348034567890",
+          course: "Economics",
+          enrollment_date: "2025-02-28",
+          status: "Active",
+          gpa: 3.75
+        }
+      }
+    }
+    #swagger.responses[200] = {
+      description: 'Student updated successfully'
+    }
+  */
     isAuthenticated,
     studentRules(), 
     validate,

@@ -14,6 +14,7 @@ import { body } from 'express-validator';
  */
 export const courseRules = () => {
   return [
+    // ✅ Required fields
     body('course_name')
       .notEmpty()
       .isString()
@@ -24,30 +25,36 @@ export const courseRules = () => {
       .isString()
       .withMessage('Description must be a non-empty string'),
 
-    body('credits')
-      .notEmpty()
-      .isNumeric()
-      .withMessage('Credits must be a numeric value'),
-
     body('department')
       .notEmpty()
       .isString()
       .withMessage('Department must be a non-empty string'),
 
-    body('course')
-      .notEmpty()
-      .isString()
-      .withMessage('Course code or reference must be a non-empty string'),
-
-    body('instructor')
-      .notEmpty()
-      .isString()
-      .withMessage('Instructor must be a valid string'),
-
     body('semester')
       .notEmpty()
       .isString()
       .withMessage('Semester must be a non-empty string'),
+
+    // 🟡 Optional fields
+    body('credit')
+      .optional()
+      .isNumeric()
+      .withMessage('Credit must be a numeric value'),
+
+    body('instructor_id')
+      .optional()
+      .isString()
+      .withMessage('Instructor ID must be a valid string'),
+
+    body('prerequisites')
+      .optional()
+      .isArray()
+      .withMessage('Prerequisites must be an array'),
+
+    body('status')
+      .optional()
+      .isIn(['active', 'inactive', 'suspended'])
+      .withMessage('Status must be one of: "active", "inactive", or "suspended"'),
   ];
 };
 
@@ -61,6 +68,7 @@ export const courseRules = () => {
  */
 export const instructorRules = () => {
   return [
+    // 🧩 Required fields
     body('first_name')
       .notEmpty()
       .isString()
@@ -77,9 +85,10 @@ export const instructorRules = () => {
       .withMessage('Email must be a valid email address'),
 
     body('phone_number')
-      .optional()
-      .isMobilePhone()
-      .withMessage('Phone number must be a valid mobile number'),
+      .notEmpty()
+      .isString()
+      .matches(/^\d{11,15}$/)
+      .withMessage('Phone number must be digits only (11–15 characters long)'),
 
     body('course')
       .notEmpty()
@@ -94,12 +103,13 @@ export const instructorRules = () => {
     body('hire_date')
       .notEmpty()
       .isISO8601()
-      .withMessage('Hire date must be a valid ISO 8601 date'),
+      .withMessage('Hire date must be a valid ISO 8601 date (e.g., "2024-01-20")'),
 
+    // 🟡 Optional field
     body('status')
-      .notEmpty()
-      .isIn(['active', 'inactive'])
-      .withMessage('Status must be either "active" or "inactive"'),
+      .optional()
+      .isIn(['active', 'inactive', 'suspended'])
+      .withMessage('Status must be one of: "active", "inactive", or "suspended"'),
   ];
 };
 
@@ -112,6 +122,7 @@ export const instructorRules = () => {
  */
 export const studentRules = () => {
   return [
+    // 🧩 Required fields
     body('first_name')
       .notEmpty()
       .isString()
@@ -128,29 +139,31 @@ export const studentRules = () => {
       .withMessage('Email must be a valid email address'),
 
     body('phone_number')
-      .optional()
-      .isMobilePhone()
-      .withMessage('Phone number must be a valid mobile number'),
+      .notEmpty()
+      .isString()
+      .matches(/^\+?\d{10,15}$/)
+      .withMessage('Phone number must contain only digits and may start with +'),
 
     body('course')
       .notEmpty()
       .isString()
       .withMessage('Course must be a non-empty string'),
 
-    body('enrolment_date')
+    body('enrollment_date')
       .notEmpty()
       .isISO8601()
-      .withMessage('Enrolment date must be a valid ISO 8601 date'),
+      .withMessage('Enrollment date must be a valid ISO 8601 date (e.g., "2025-02-28")'),
 
+    // 🟡 Optional fields
     body('status')
-      .notEmpty()
+      .optional()
       .isIn(['active', 'inactive', 'suspended'])
       .withMessage('Status must be one of: "active", "inactive", or "suspended"'),
 
     body('gpa')
       .optional()
-      .isFloat({ min: 0.0, max: 5.0 })
-      .withMessage('GPA must be a number between 0.0 and 5.0'),
+      .isFloat({ min: 0.0, max: 4.0 })
+      .withMessage('GPA must be a numeric value between 0.0 and 4.0'),
   ];
 };
 

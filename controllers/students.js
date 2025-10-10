@@ -4,7 +4,8 @@ import mongodb from '../data/database.js'
 
 // ======================= GET ALL STUDENTS =======================
 const getAllEnrolledStudents = async (req, res) => {
-    //#swagger.tags = ['All Students']
+    //#swagger.tags = ['Students']
+    //#swagger.description = 'Retrieve all Students available in the system'
     try {
         // Fetch all Students documents from the 'Students' collection
         const result = await mongodb.getDatabase().collection('students').find();
@@ -27,7 +28,8 @@ const getAllEnrolledStudents = async (req, res) => {
 }; 
 // ======================= GET STUDENT BY ID =======================
 const getOneEnrolledStudent = async (req, res) => {
-    //#swagger.tags = ['One Student']
+    //#swagger.tags = ['Students']
+    //#swagger.description = 'Retrieve a specific Student by ID'
     try {
         // Convert the ID from the URL to a MongoDB ObjectId
         const studentId = new ObjectId(req.params.id);
@@ -53,7 +55,33 @@ const getOneEnrolledStudent = async (req, res) => {
 
 // ======================= CREATE STUDENTS =======================
 const insertAStudent = async (req, res) => {
-    //#swagger.tags = ['Create Student']
+/*
+    #swagger.tags = ['Students']
+    #swagger.description = 'Add a new student to the catalog'
+    #swagger.consumes = ['application/json']
+    #swagger.produces = ['application/json']
+    #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Student data to add',
+      required: true,
+      schema: {
+        example: {
+          first_name: "Aisha",
+          last_name: "Garba",
+          email: "aisha.garba@example.com",
+          phone_number: "+2348034567890",
+          course: "Economics",
+          enrollment_date: "2025-02-28",
+          status: "Active",
+          gpa: 3.55
+        }
+      }
+    }
+    #swagger.responses[200] = swaggerTemplates.responses.success[200]
+    #swagger.responses[400] = swaggerTemplates.responses.error[400]
+    #swagger.responses[404] = swaggerTemplates.responses.error[404]
+    #swagger.responses[500] = swaggerTemplates.responses.error[500]
+  */
     try {
 
         console.log("Incoming data:", req.body);
@@ -79,7 +107,34 @@ const insertAStudent = async (req, res) => {
 };
 // ======================= UPDATE A STUDENT =======================
 const updateStudentEnrollment = async (req, res) => {
-    //#swagger.tags = ['Update Student']
+/*
+    #swagger.tags = ['Students']
+    #swagger.description = 'Update an existing student'
+    #swagger.consumes = ['application/json']
+    #swagger.produces = ['application/json']
+    #swagger.parameters['id'] = { in: 'path', description: 'Student ID', required: true }
+    #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Updated student data',
+      required: true,
+      schema: {
+        example: {
+          first_name: "Aisha",
+          last_name: "Garba",
+          email: "aisha.garba@example.com",
+          phone_number: "+2348034567890",
+          course: "Economics",
+          enrollment_date: "2025-02-28",
+          status: "Active",
+          gpa: 3.75
+        }
+      }
+    }
+    #swagger.responses[200] = swaggerTemplates.responses.success[200]
+    #swagger.responses[400] = swaggerTemplates.responses.error[400]
+    #swagger.responses[404] = swaggerTemplates.responses.error[404]
+    #swagger.responses[500] = swaggerTemplates.responses.error[500]
+  */
     try {
         const studentId = req.params.id;
         // Validate ID format before proceeding
@@ -105,7 +160,7 @@ const updateStudentEnrollment = async (req, res) => {
         }
         
         // Return success message depending on update result
-        if (result.modifiedCount > 0) {
+        if (result.modifiedCount === 0) {
             res.status(200).json({ message: 'No changes made to the Student'});
         }
         res.status(200).json({
@@ -119,7 +174,8 @@ const updateStudentEnrollment = async (req, res) => {
 };
 // ======================= DELETE A STUDENTS =======================
 const deleteOneEnrolledStudent = async (req, res) => {
-    //#swagger.tags = ['Delete Student']
+    //#swagger.tags = ['Students']
+    //#swagger.description = 'Delete a Student by ID'
     try {
         // Validate ID format
         const studentId = req.params.id;

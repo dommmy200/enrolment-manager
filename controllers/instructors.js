@@ -5,7 +5,8 @@ import mongodb from '../data/database.js';
 
 // ======================= GET ALL INSTRUCTORS =======================
 const getAllInstructors = async (req, res) => {
-    //#swagger.tags = ['All Instructors']
+    //#swagger.tags = ['Instructors']
+    //#swagger.description = 'Retrieve all Instructors available in the system'
     try {
         // Fetch all instructors documents from the 'Instructors' collection
         const result = await mongodb.getDatabase().collection('instructors').find();
@@ -28,7 +29,8 @@ const getAllInstructors = async (req, res) => {
 }; 
 // ======================= GET INSTRUCTOR BY ID =======================
 const getOneInstructor = async (req, res) => {
-    //#swagger.tags = ['One Instructor']
+    //#swagger.tags = ['Instructors']
+    //#swagger.description = 'Retrieve a specific available in the system'
     try {
         // Convert the ID from the URL to a MongoDB ObjectId
         const instructorId = new ObjectId(req.params.id);
@@ -54,20 +56,34 @@ const getOneInstructor = async (req, res) => {
 
 // ======================= CREATE INSTRUCTOR =======================
 const insertOneInstructor = async (req, res) => {
-    //#swagger.tags = ['Create Instructor']
+/*
+    #swagger.tags = ['Instructors']
+    #swagger.description = 'Add a new Instructor to the catalog'
+    #swagger.consumes = ['application/json']
+    #swagger.produces = ['application/json']
+    #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Instructor data to add',
+      required: true,
+      schema: {
+        example: {
+          first_name: "David",
+          last_name: "Ogunleye",
+          email: "adewale.ogunleye@example.com",
+          phone_number: "+234809870987",
+          course: "Medic",
+          department: "Computer Science",
+          hire_date: "2024-01-20",
+          status: "Active"
+        }
+      }
+    }
+    #swagger.responses[200] = swaggerTemplates.responses.success[200]
+    #swagger.responses[400] = swaggerTemplates.responses.error[400]
+    #swagger.responses[404] = swaggerTemplates.responses.error[404]
+    #swagger.responses[500] = swaggerTemplates.responses.error[500]
+  */
     try {
-        // // Create new instructor object from request body
-        // const insertInstructor = {
-        //     first_name: req.body.first_name,
-        //     last_name: req.body.last_name,
-        //     email: req.body.email,
-        //     phone_number: req.body.phone_number,
-        //     course: req.body.course,
-        //     department: req.body.department,
-        //     hire_date: req.body.hire_date,
-        //     status: req.body.status
-        // }
-        
         // Insert new instructor into MongoDB collection
         console.log("Incoming data:", req.body);
         const db = mongodb.getDatabase();
@@ -93,7 +109,34 @@ const insertOneInstructor = async (req, res) => {
 };
 // ======================= UPDATE A INSTRUCTOR =======================
 const updateInstructors = async (req, res) => {
-    //#swagger.tags = ['Update Instructor']
+/*
+    #swagger.tags = ['Instructors']
+    #swagger.description = 'Update an existing Instructor'
+    #swagger.consumes = ['application/json']
+    #swagger.produces = ['application/json']
+    #swagger.parameters['id'] = { in: 'path', description: 'Instructor ID', required: true }
+    #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Updated Instructor data',
+      required: true,
+      schema: {
+        example: {
+          first_name: "David",
+          last_name: "Ogunleye",
+          email: "adewale.ogunleye@example.com",
+          phone_number: "+234809870987",
+          course: "Medic",
+          department: "Computer Science",
+          hire_date: "2024-01-20",
+          status: "Active"
+        }
+      }
+    }
+    #swagger.responses[200] = swaggerTemplates.responses.success[200]
+    #swagger.responses[400] = swaggerTemplates.responses.error[400]
+    #swagger.responses[404] = swaggerTemplates.responses.error[404]
+    #swagger.responses[500] = swaggerTemplates.responses.error[500]
+  */
     try {
         const instructorId = req.params.id;
         // Validate ID format before proceeding
@@ -102,19 +145,6 @@ const updateInstructors = async (req, res) => {
                 message: 'Invalid instructor ID format'
             });
         }
-        
-        // Convert ID to ObjectId and prepare update data
-        // const instructorId = new ObjectId(req.params.id);
-        // const updateInstructor = {
-        //     first_name: req.body.first_name,
-        //     last_name: req.body.last_name,
-        //     email: req.body.email,
-        //     phone_number: req.body.phone_number,
-        //     course: req.body.course,
-        //     department: req.body.department,
-        //     hire_date: req.body.hire_date,
-        //     status: req.body.status
-        // }
         
         const updateInstructor = req.body;
         const db = mongodb.getDatabase();
@@ -132,7 +162,7 @@ const updateInstructors = async (req, res) => {
         }
         
         // Return success message depending on update result
-        if (result.modifiedCount > 0) {
+        if (result.modifiedCount === 0) {
             res.status(200).json({ message: 'No changes made to the Instructor'});
         }
         res.status(200).json({
@@ -146,7 +176,8 @@ const updateInstructors = async (req, res) => {
 };
 // ======================= DELETE INSTRUCTOR =======================
 const deleteOneInstructor = async (req, res) => {
-    //#swagger.tags = ['Delete Instructor']
+    //#swagger.tags = ['Instructors']
+    //#swagger.description = 'Delete an Instructor by ID'
     try {
         // Validate ID format
         const instructorId = req.params.id;
@@ -178,5 +209,3 @@ const deleteOneInstructor = async (req, res) => {
     }
 };
 export default { getAllInstructors, getOneInstructor, insertOneInstructor, updateInstructors, deleteOneInstructor }
-
-// export default { getAllCourses, getOneCourse, insertOneCourse, updateCourses, deleteOneCourse }
