@@ -89,12 +89,12 @@ const insertOneCourse = async (req, res) => {
         console.log("Incoming data:", req.body);
         const db = mongodb.getDatabase();
         const course = req.body;
-        if (!course.course_name || !course.description || !course.credits || !course.semester) {
-            return res.status(400).json({ 
-                // 
-                message: `'Missing required fields: course_name, description, credits or semester' ${course}`
-            });
-        }
+        // if (!course.course_name || !course.description || !course.credits || !course.semester) {
+        //     return res.status(400).json({ 
+        //         // 
+        //         message: 'Missing required fields: course_name, description, credits or semester'
+        //     });
+        // }
         // Insert new course into MongoDB collection
         const result = await db.collection('courses').insertOne(course);
         
