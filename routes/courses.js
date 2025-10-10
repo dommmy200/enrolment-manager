@@ -1,5 +1,4 @@
 import express from 'express'
-// import ensureAuthenticated, { ensureScope } from "../middleware/ensureAuth.js";
 import coursesController from '../controllers/courses.js'
 import {courseRules, validate}  from '../middleware/validate.js';
 import {isAuthenticated} from '../middleware/authenticate.js';

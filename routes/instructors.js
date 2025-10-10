@@ -1,8 +1,7 @@
 import express from 'express'
-
+import instructorController from '../controllers/instructors.js'
 import {instructorRules, validate} from '../middleware/validate.js';
 import {isAuthenticated} from '../middleware/authenticate.js';
-import instructorController from '../controllers/instructors.js'
 const router = express.Router()
 
 router.get('/',
