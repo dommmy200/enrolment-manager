@@ -28,8 +28,6 @@ router.put('/:id',
 
 router.delete('/:id',
     isAuthenticated,
-    studentRules(),
-    validate,
     studentController.deleteOneEnrolledStudent)
 
 export default router

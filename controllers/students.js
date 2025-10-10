@@ -4,7 +4,7 @@ import mongodb from '../data/database.js'
 
 // ======================= GET ALL STUDENTS =======================
 const getAllEnrolledStudents = async (req, res) => {
-    //#swagger.tags = ['Students']
+    //#swagger.tags = ['All Students']
     try {
         // Fetch all Students documents from the 'Students' collection
         const result = await mongodb.getDatabase().collection('students').find();
@@ -27,7 +27,7 @@ const getAllEnrolledStudents = async (req, res) => {
 }; 
 // ======================= GET STUDENT BY ID =======================
 const getOneEnrolledStudent = async (req, res) => {
-    //#swagger.tags = ['Students']
+    //#swagger.tags = ['One Student']
     try {
         // Convert the ID from the URL to a MongoDB ObjectId
         const studentId = new ObjectId(req.params.id);
@@ -53,7 +53,7 @@ const getOneEnrolledStudent = async (req, res) => {
 
 // ======================= CREATE STUDENTS =======================
 const insertAStudent = async (req, res) => {
-    //#swagger.tags = ['Students']
+    //#swagger.tags = ['Create Student']
     try {
 
         console.log("Incoming data:", req.body);
@@ -79,7 +79,7 @@ const insertAStudent = async (req, res) => {
 };
 // ======================= UPDATE A STUDENT =======================
 const updateStudentEnrollment = async (req, res) => {
-    //#swagger.tags = ['Students']
+    //#swagger.tags = ['Update Student']
     try {
         const studentId = req.params.id;
         // Validate ID format before proceeding
@@ -91,7 +91,7 @@ const updateStudentEnrollment = async (req, res) => {
 
         const updateStudent = req.body;
         const db = mongodb.getDatabase();
-        // Update Course document by ID
+        // Update course document by ID
         const result = await db.collection('students').updateOne(
             { _id: new ObjectId(studentId) }, 
             { $set: updateStudent }
@@ -119,7 +119,7 @@ const updateStudentEnrollment = async (req, res) => {
 };
 // ======================= DELETE A STUDENTS =======================
 const deleteOneEnrolledStudent = async (req, res) => {
-    //#swagger.tags = ['Students']
+    //#swagger.tags = ['Delete Student']
     try {
         // Validate ID format
         const studentId = req.params.id;
@@ -129,7 +129,7 @@ const deleteOneEnrolledStudent = async (req, res) => {
             });
         }
         
-        // Convert ID to ObjectId and delete course by ID
+        // Convert ID to ObjectId and delete student by ID
         const db = mongodb.getDatabase()
         const result = await db.collection('students').deleteOne({ _id: new ObjectId(studentId)  });
         

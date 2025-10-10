@@ -14,7 +14,7 @@
     "/": {
       "get": {
         "tags": [
-          "Welcome to the Movies API"
+          "Welcome to the Student Enrollment API"
         ],
         "description": "",
         "responses": {
@@ -77,7 +77,7 @@
     "/students/": {
       "get": {
         "tags": [
-          "Students"
+          "All Students"
         ],
         "description": "",
         "produces": [
@@ -97,7 +97,7 @@
       },
       "post": {
         "tags": [
-          "Students"
+          "Create Student"
         ],
         "description": "",
         "parameters": [
@@ -142,7 +142,7 @@
     "/students/{id}": {
       "get": {
         "tags": [
-          "Students"
+          "One Student"
         ],
         "description": "",
         "produces": [
@@ -170,7 +170,7 @@
       },
       "put": {
         "tags": [
-          "Students"
+          "Update Student"
         ],
         "description": "",
         "parameters": [
@@ -201,7 +201,7 @@
       },
       "delete": {
         "tags": [
-          "Students"
+          "Delete Student"
         ],
         "description": "",
         "parameters": [
@@ -234,7 +234,7 @@
     "/courses/": {
       "get": {
         "tags": [
-          "Courses"
+          "All Courses"
         ],
         "description": "",
         "produces": [
@@ -264,25 +264,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "course_name": {
+                "req": {
                   "example": "any"
                 },
-                "description": {
+                "instructor": {
                   "example": "any"
                 },
                 "credits": {
                   "example": "any"
                 },
                 "department": {
-                  "example": "any"
-                },
-                "course": {
-                  "example": "any"
-                },
-                "instructor": {
-                  "example": "any"
-                },
-                "semester": {
                   "example": "any"
                 }
               }
@@ -345,36 +336,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "course_name": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "credits": {
-                  "example": "any"
-                },
-                "department": {
-                  "example": "any"
-                },
-                "course": {
-                  "example": "any"
-                },
-                "instructor": {
-                  "example": "any"
-                },
-                "semester": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -430,7 +391,7 @@
     "/instructors/": {
       "get": {
         "tags": [
-          "Instructors"
+          "All Instructors"
         ],
         "description": "",
         "produces": [
@@ -450,7 +411,7 @@
       },
       "post": {
         "tags": [
-          "Instructors"
+          "Create Instructor"
         ],
         "description": "",
         "parameters": [
@@ -466,22 +427,10 @@
                 "last_name": {
                   "example": "any"
                 },
-                "email": {
-                  "example": "any"
-                },
                 "phone_number": {
                   "example": "any"
                 },
-                "course": {
-                  "example": "any"
-                },
-                "department": {
-                  "example": "any"
-                },
-                "hire_date": {
-                  "example": "any"
-                },
-                "status": {
+                "email": {
                   "example": "any"
                 }
               }
@@ -507,7 +456,7 @@
     "/instructors/{id}": {
       "get": {
         "tags": [
-          "Instructors"
+          "One Instructor"
         ],
         "description": "",
         "produces": [
@@ -535,7 +484,7 @@
       },
       "put": {
         "tags": [
-          "Instructors"
+          "Update Instructor"
         ],
         "description": "",
         "parameters": [
@@ -544,39 +493,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "first_name": {
-                  "example": "any"
-                },
-                "last_name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phone_number": {
-                  "example": "any"
-                },
-                "course": {
-                  "example": "any"
-                },
-                "department": {
-                  "example": "any"
-                },
-                "hire_date": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -599,7 +515,7 @@
       },
       "delete": {
         "tags": [
-          "Instructors"
+          "Delete Instructor"
         ],
         "description": "",
         "parameters": [

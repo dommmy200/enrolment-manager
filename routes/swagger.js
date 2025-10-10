@@ -38,7 +38,7 @@
 //   swaggerUi.serve,
 //   swaggerUi.setup(swaggerSpec, {
 //     swaggerOptions: {
-//       persistAuthorization: true, // ✅ keeps JWT after reload
+//       persistAuthorization: true, // keeps JWT after reload
 //     },
 //     customSiteTitle: "School API Docs", // optional branding
 //   })

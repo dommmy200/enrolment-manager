@@ -7,9 +7,6 @@ import instructorRoute from './instructors.js'
 import swaggerRoute from './swagger.js'
 const router = express.Router()
 
-// router.get('/', (req, res, next) => {
-//     res.send('Hello World!')
-// })
 // Auth routes (your /auth/google & /auth/google/callback now mounted here)
 router.use("/auth", authRoutes);
 
@@ -25,7 +22,7 @@ router.use('/instructors', instructorRoute)
  * It provides users with a brief guide on available endpoints.
  */
 router.get('/', (req, res) => {
-    //#swagger.tags = ['Welcome to the Movies API']
+    //#swagger.tags = ['Welcome to the Student Enrollment API']
     res
       .status(200)
       .send(

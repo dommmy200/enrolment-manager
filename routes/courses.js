@@ -25,8 +25,6 @@ router.put('/:id',
 
 router.delete('/:id',
     isAuthenticated,
-    courseRules(), 
-    validate,
     coursesController.deleteOneCourse)
 
 export default router
